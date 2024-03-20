@@ -62,10 +62,9 @@ Você pode [acessar a página do projeto](https://magilogus.github.io/GamerProje
 
 ## Desenvolvedores
 
-| [<img src="https://avatars.githubusercontent.com/u/125275514?v=4" width=115><br><sub>Paulo Gonçalves</sub>](https://github.com/MagiLogus) | 
-| :---: | 
-| [<img src="https://avatars.githubusercontent.com/u/84160431?v=4" width=115><br><sub>Márcio Wagner</sub>](https://github.com/mwmjunior) | 
-| :---: | 
+| [<img src="https://avatars.githubusercontent.com/u/125275514?v=4" width=115><br><sub>Paulo Gonçalves</sub>](https://github.com/MagiLogus) | [<img src="https://avatars.githubusercontent.com/u/84160431?v=4" width=115><br><sub>Márcio Wagner</sub>](https://github.com/mwmjunior) |
+| :---: | :---: |
+
 
 
 [def]: #
