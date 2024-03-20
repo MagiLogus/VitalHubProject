@@ -60,9 +60,11 @@ A identidade visual do projeto foi criada e extraída do Figma, garantindo uma a
 
 Você pode [acessar a página do projeto](https://magilogus.github.io/GamerProject/), sendo também possível [acessar o protótipo de alta fidelidade](https://www.figma.com/file/JfMPPyVEhQX6RGTSjm4i5z/Gamer-Project?t=fn5aQaiHI13M8dON-0) no Figma. 
 
-## Desenvolvedor
+## Desenvolvedores
 
 | [<img src="https://avatars.githubusercontent.com/u/125275514?v=4" width=115><br><sub>Paulo Gonçalves</sub>](https://github.com/MagiLogus) | 
+| :---: | 
+| [<img src="https://avatars.githubusercontent.com/u/84160431?v=4" width=115><br><sub>Márcio Wagner</sub>](https://github.com/mwmjunior) | 
 | :---: | 
 
 
