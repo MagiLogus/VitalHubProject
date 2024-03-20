@@ -3,7 +3,7 @@ import { AppointmentContent, ModalContent, ModalImage, RowTextModal, TextModal }
 import { Title } from "../Title/Style";
 import { ButtonCancel, ButtonModal, ButtonSecondaryTitle, ButtonTitle } from "../Button/Style";
 
-export const AppointmentModal = ({ situacao, navigation, visible, setShowModalAppointment, typeProfile = 'paciente', ...rest }) => {
+export const AppointmentModal = ({ navigation, visible, setShowModalAppointment, typeProfile = 'paciente', ...rest }) => {
     return (
         <Modal {...rest} visible={visible} transparent={true} animationType='fade'>
             <AppointmentContent>

@@ -42,22 +42,22 @@ export const AppointmentCard = ({
             </TextBold>
           </ClockCard>
 
-          {/* valida e mostra o tipo de botão conforme a situação */}
+            {/* valida e mostra o tipo de botão conforme a situação */}
 
-          {
-            situacao == "cancelado" ? (
-              <>
-              </>
-            ) : situacao == "pendente" ? (
-              <ButtonCard onPress={onPressCancel}>
-                <ButtonText situacao={situacao}>Cancelar</ButtonText>
-              </ButtonCard>
-            ) : (
-              <ButtonCard onPress={onPressAppointment}>
-                <ButtonText situacao={situacao}>Ver Prontuário</ButtonText>
-              </ButtonCard>
-            )
-          }
+            {
+                situacao == "cancelado" ? (
+                    <>
+                    </>
+                ) : situacao == "pendente" ? (
+                    <ButtonCard onPress={onPressCancel}>
+                        <ButtonText situacao={situacao}>Cancelar</ButtonText>
+                    </ButtonCard>
+                ) : (
+                    <ButtonCard onPress={onPressAppointment}>
+                        <ButtonText situacao={situacao}>Ver Prontuário</ButtonText>
+                    </ButtonCard>
+                )
+            } 
         </ViewRow>
       </ContentCard>
     </ContainerCardsList>

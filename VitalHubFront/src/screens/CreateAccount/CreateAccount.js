@@ -6,7 +6,7 @@ import { LinkAction } from "../../components/Links/Style";
 import { Logo } from "../../components/Logo/Style";
 import { ButtonTitle, Subtitle, Title } from "../../components/Title/Style";
 
-export const CreateAccount = ({ navigation }) => {
+export const CreateAccount = ({navigation}) => {
     async function Login() {
         navigation.replace("Login")
     }
@@ -24,7 +24,7 @@ export const CreateAccount = ({ navigation }) => {
             <Button width={"90%"} onPress={() => Login()}>
                 <ButtonTitle>Cadastrar</ButtonTitle>
             </Button>
-            <LinkAction onPress={() => Login()}>Cancelar</LinkAction>
+            <LinkAction>Cancelar</LinkAction>
         </Container>
     );
 };

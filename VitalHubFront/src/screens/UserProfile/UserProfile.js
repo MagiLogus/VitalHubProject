@@ -3,10 +3,7 @@ import { Button, ButtonLogoff } from "../../components/Button/Style";
 import { Container, ImageContainer, ScrollViewContainer, TextBoxArea, TextBoxContainer, TextBoxContainerRow } from "../../components/Container/Style";
 import { ButtonTitle, EmailTitle, TextBoxText, TextBoxTitle, Title } from "../../components/Title/Style";
 
-export const UserProfile = ({ navigation }) => {
-    async function Login() {
-        navigation.replace("Login")
-    }
+export const UserProfile = () => {
     return (
         <Container>
             <StatusBar translucent backgroundColor="transparent" />
@@ -53,7 +50,7 @@ export const UserProfile = ({ navigation }) => {
                     <Button>
                         <ButtonTitle>Editar</ButtonTitle>
                     </Button>
-                    <ButtonLogoff onPress={() => Login()}>
+                    <ButtonLogoff>
                         <ButtonTitle>Sair do APP</ButtonTitle>
                     </ButtonLogoff>
                 </ScrollView>

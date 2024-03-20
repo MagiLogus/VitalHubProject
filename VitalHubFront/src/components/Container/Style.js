@@ -60,7 +60,7 @@ flex-direction: row;
 justify-content: space-between;
 `
 
-export const TopBar = styled.TouchableOpacity.attrs({ activeOpacity: 1 })`
+export const TopBar = styled.View`
 width: 100%;
 height: 22.5%;
 background-color: #60BFC5;
@@ -75,7 +75,7 @@ background-size: cover;
 border-radius: 5px;
 `
 
-export const TopBarContainer = styled.TouchableOpacity.attrs({ activeOpacity: 1 })`
+export const TopBarContainer = styled.View`
 width: 90%;
 align-items: center;
 justify-content: space-between;
@@ -89,7 +89,7 @@ justify-content: center;
 margin-left: 10px;
 `
 
-export const TopBarTitleContainer = styled.TouchableOpacity.attrs({ activeOpacity: 1 })`
+export const TopBarTitleContainer = styled.View`
 align-items: center;
 justify-content: space-between;
 flex-direction: row;

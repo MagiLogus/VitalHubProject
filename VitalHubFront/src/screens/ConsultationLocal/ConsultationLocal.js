@@ -4,10 +4,7 @@ import { Marker } from 'react-native-maps';
 import { AgeTitle, TextBoxText, TextBoxTitle, Title } from "../../components/Title/Style";
 import { LinkAction } from "../../components/Links/Style";
 
-export const ConsultationLocal = ({ navigation }) => {
-  async function PacientAppointments() {
-    navigation.replace("PacientAppointments")
-  }
+export const ConsultationLocal = () => {
   return (
     <Container>
       <Map
@@ -53,7 +50,7 @@ export const ConsultationLocal = ({ navigation }) => {
               </TextBoxArea>
             </TextBoxContainer>
           </TextBoxContainerRow>
-          <LinkAction onPress={() => PacientAppointments()}>Voltar</LinkAction>
+          <LinkAction>Voltar</LinkAction>
         </MapInformationContainer>
       </MapInformation>
     </Container>

@@ -9,9 +9,6 @@ import { AppointmentCard } from "../../components/AppointmentCard/AppointmentCar
 import { ListComponent } from "../../components/List/List";
 import { CancellationModal } from "../../components/CancellationModal/CancellationModal";
 import { AppointmentButton } from "../../components/Button/Style";
-import { ScheduleAppointmentModal } from "../../components/ScheduleAppointmentModal/ScheduleAppointmentModal";
-import * as Notifications from 'expo-notifications';
-
 
 const Consultas = [
     { id: 1, nome: "Dr.Carlos", situacao: "pendente" },
@@ -23,44 +20,19 @@ const Consultas = [
     { id: 7, nome: "Dr.Carlos", situacao: "cancelado" }
 ]
 
-export const PacientAppointments = ({ navigation }) => {
+export const PacientAppointments = () => {
     const [statusList, setStatusList] = useState("pendente")
     const [showModalCancel, setShowModalCancel] = useState(false);
-    const [showModalSchedule, setshowModalSchedule] = useState(false);
-    async function UserProfile() {
-        navigation.replace("UserProfile")
-    }
-
-    const handleCallNotifications = async () => {
-        const { status } = await Notifications.getPermissionsAsync();
-        if (status !== "granted") {
-            alert("Sem Permissão");
-            return;
-        }
-
-        await Notifications.scheduleNotificationAsync({
-            content: {
-                title: "Hello World!",
-                body: "Bem vindo ao mundo!"
-            },
-            trigger: {
-                seconds: 5
-            }
-        });
-
-
-    }
-
     return (
         <Container>
             <StatusBar translucent backgroundColor="transparent" />
-            <TopBar >
-                <TopBarContainer  >
-                    <TopBarTitleContainer onPress={() => UserProfile()}>
+            <TopBar>
+                <TopBarContainer>
+                    <TopBarTitleContainer>
                         <ImageTopBar source={require("../../assets/images/user_profile.png")} />
                         <TopBarImageContainer>
                             <Subtitle>Bem Vindo</Subtitle>
-                            <TitleTopBar >Richard Kosta</TitleTopBar>
+                            <TitleTopBar>Richard Kosta</TitleTopBar>
                         </TopBarImageContainer>
                     </TopBarTitleContainer>
                     <AlertIcon />
@@ -88,10 +60,8 @@ export const PacientAppointments = ({ navigation }) => {
             <CancellationModal
                 visible={showModalCancel}
                 setShowModalCancel={setShowModalCancel}
-                handleCallNotifications={handleCallNotifications}
             />
-            <ScheduleAppointmentModal visible={showModalSchedule} setshowModalSchedule={setshowModalSchedule} />
-            <AppointmentButton onPressSchedule={() => setshowModalSchedule(true)}>
+            <AppointmentButton onPress={() => setShowModalCancel(true)}>
                 <MedicalIcon />
             </AppointmentButton>
         </Container>
