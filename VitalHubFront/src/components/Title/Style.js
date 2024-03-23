@@ -7,6 +7,7 @@ font-family: "MontserratAlternates_600SemiBold";
 margin-top: 25px;
 text-align: center;
 `
+
 export const TitleDoctor = styled.Text`
 margin-top: 27px;
 font-size: 16px;
@@ -28,9 +29,10 @@ color: #496BBA;
 
 export const Subtitle = styled.Text`
 font-size: 16px;
-color: #5F5C6B;
+color: #4E4B59;
 font-family: "Quicksand_500Medium";
 text-align: center;
+font-style: normal;
 `
 
 export const SubtitleFocus = styled.Text`
@@ -41,6 +43,7 @@ export const EmailTitle = styled(Subtitle)`
 color: #4E4B59;
 margin-top: 10px;
 `
+
 export const DoctorSubtitle = styled.Text`
 color: #8C8A97;
 font-family: 'Quicksand_500Medium';
