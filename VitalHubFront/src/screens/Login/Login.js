@@ -7,26 +7,53 @@ import { LinkBold, LinkMedium } from "../../components/Links/Style";
 import { Logo } from "../../components/Logo/Style";
 import { ButtonTitle, ButtonTitleGoogle, Title } from "../../components/Title/Style";
 import { ContentAccount, TextAccount } from "./Style";
+import { React, useState } from "react";
+import { api, loginResource } from "../../service/service";
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 export const Login = ({ navigation }) => {
+    const [email, setEmail] = useState('paulo@email.com')
+    const [senha, setSenha] = useState('123456')
+
+    // Chamar a funcao de login 
     async function Login() {
+
+        // Chama a api de Login
+        const response = await api.post(loginResource, {
+            email: email,
+            senha: senha
+        })
+
+        await AsyncStorage.setItem('token', JSON.stringify(response.data))
+
         navigation.replace("Main")
     }
+
     async function PasswordRecover() {
         navigation.replace("PasswordRecover")
     }
+
     async function CreateAccount() {
         navigation.replace("CreateAccount")
     }
+
     return (
         <Container>
             <StatusBar translucent backgroundColor="transparent" />
             <Logo />
             <Title>Entrar ou Criar Conta</Title>
-            <Input placeholder="Usuário ou E-mail" />
-            <Input placeholder="Senha" secureTextEntry />
+            <Input placeholder="Usuário ou E-mail"
+                value={email}
+                onChangeText={(txt) => setEmail(txt)}
+
+            />
+            <Input placeholder="Senha" secureTextEntry
+                value={senha}
+                onChangeText={(txt) => setSenha(txt)}
+
+            />
             <LinkMedium onPress={() => PasswordRecover()}>Esqueceu sua senha?</LinkMedium>
-            <Button width="90%" onPress={() => Login()}>
+            <Button width="90%" onPress={() => { Login() }}>
                 <ButtonTitle>Entrar</ButtonTitle>
             </Button>
             <ButtonGoogle width="90%">

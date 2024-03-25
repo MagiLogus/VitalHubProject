@@ -21,6 +21,7 @@ export const LinkAction = styled(LinkBold)`
 color: #344F8F;
 margin-top: 30px;
 align-self: center;
+margin-bottom: 10px;
 `
 export const LinkActionRed = styled(LinkBold)`
 color: #C81D25;

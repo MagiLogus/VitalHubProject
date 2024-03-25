@@ -71,7 +71,6 @@ align-items: center;
 export const ImageTopBar = styled.Image`
 width: 60px;
 height: 60px;
-background-size: cover;
 border-radius: 5px;
 `
 
@@ -81,6 +80,7 @@ align-items: center;
 justify-content: space-between;
 flex-direction: row;
 margin-top: 62px;
+
 `
 
 export const TopBarImageContainer = styled.View`
@@ -89,7 +89,7 @@ justify-content: center;
 margin-left: 10px;
 `
 
-export const TopBarTitleContainer = styled.View`
+export const TopBarTitleContainer = styled.TouchableOpacity`
 align-items: center;
 justify-content: space-between;
 flex-direction: row;

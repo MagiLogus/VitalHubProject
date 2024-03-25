@@ -6,7 +6,12 @@ import { AttentionIcon, CameraIcon } from "../../components/Icons/Style";
 import { LinkAction, LinkActionRed } from "../../components/Links/Style";
 import { Line } from "../../components/Line/Style";
 
-export const ViewPrescription = () => {
+export const ViewPrescription = ({ navigation }) => {
+
+    async function Main() {
+        navigation.replace("Main");
+    }
+
     return (
         <Container>
             <StatusBar translucent backgroundColor="transparent" />
@@ -64,7 +69,7 @@ export const ViewPrescription = () => {
                             <TextBoxText>tudo normal</TextBoxText>
                         </TextBoxArea>
                     </TextBoxContainer>
-                    <LinkAction>Voltar</LinkAction>
+                    <LinkAction onPress={Main}>Voltar</LinkAction>
                 </ScrollView>
             </ScrollViewContainer>
         </Container>

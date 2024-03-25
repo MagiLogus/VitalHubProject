@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { Shadow } from 'react-native-shadow'
 
 export const Button = styled.TouchableOpacity`
 width: ${(props) => props.width || '100%'};
@@ -25,6 +26,7 @@ background-color: #ACABB7;
 width: 60%;
 align-self: center;
 border: 1px solid #ACABB7;
+margin-bottom: 30px;
 `
 
 export const ButtonSecondary = styled(Button)`
@@ -71,7 +73,7 @@ export const AppointmentButton = styled.TouchableOpacity`
   bottom: 15px;
   align-items: center;
   justify-content: center;
-  elevation: 5; 
+  elevation: 5;
 `;
 
 export const ButtonImage = styled(Button)`
