@@ -15,6 +15,7 @@ import { ConsultationLocal } from './src/screens/ConsultationLocal/ConsultationL
 import { SelectDoctor } from './src/screens/SelectDoctor/SelectDoctor';
 import { SelectClinic } from './src/screens/SelectClinic/SelectClinic';
 import { Main } from './src/screens/Main/Main';
+import { InsertMedicalRecord } from './src/screens/InsertMedicalRecord/InsertMedicalRecord';
 
 
 const Stack = createNativeStackNavigator();
@@ -37,11 +38,12 @@ export default function App() {
         <Stack.Screen name='EmailVerification' component={EmailVerification} options={{ title: 'Verificar E-mail', headerShown: false }} />
         <Stack.Screen name='UserProfile' component={UserProfile} options={{ title: 'Perfil', headerShown: false }} />
         <Stack.Screen name='ConfirmMedicalRecord' component={ConfirmMedicalRecord} options={{ title: 'Medico - Inserçáo Prontuário', headerShown: false }} />
-        <Stack.Screen name='PacientAppointments' component={Appointments} options={{ title: 'Paciente - Consultas', headerShown: false }} />
+        <Stack.Screen name='Appointments' component={Appointments} options={{ title: 'Paciente - Consultas', headerShown: false }} />
         <Stack.Screen name='ViewPrescription' component={ViewPrescription} options={{ title: 'Medico - Visualiar Prescrição', headerShown: false }} />
         <Stack.Screen name='ConsultationLocal' component={ConsultationLocal} options={{ title: 'Medico - Local da Consulta', headerShown: false }} />
         <Stack.Screen name='SelectDoctor' component={SelectDoctor} options={{ title: 'Selecionar Médico', headerShown: false }} />
         <Stack.Screen name='SelectClinic' component={SelectClinic} options={{ title: 'Selecionar Clínica', headerShown: false }} />
+        <Stack.Screen name='InsertMedicalRecord' component={InsertMedicalRecord} options={{ title: 'Inserção Prontuário', headerShown: false }} />
         <Stack.Screen name="Main" component={Main} options={{ title: 'Main', headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>

@@ -12,13 +12,13 @@ import { Header } from "../../components/Header/Header";
 import { ScheduleAppointment } from "../../screens/ScheduleAppointment/ScheduleAppointment"
 
 const Consultas = [
-    { id: 1, nome: "Paulo Oliveira", age: "25 Anos", situacao: "pendente", level: "Rotina", source: "https://avatars.githubusercontent.com/u/125275514?v=4" },
-    { id: 2, nome: "Carlos Roque", age: "26 Anos", situacao: "realizado", level: "Exame", source: "https://avatars.githubusercontent.com/u/125273727?v=4" },
-    { id: 3, nome: "Luiz Carlos", age: "27 Anos", situacao: "cancelado", level: "Urgência", source: "https://avatars.githubusercontent.com/u/134458811?v=4" },
-    { id: 4, nome: "Lucas Santos", age: "28 Anos", situacao: "cancelado", level: "Rotina", source: "https://avatars.githubusercontent.com/u/125273798?v=4" },
-    { id: 5, nome: "Ana Santos", age: "29 Anos", situacao: "cancelado", level: "Urgência", source: "https://avatars.githubusercontent.com/u/133692577?v=4" },
-    { id: 6, nome: "Everton Araujo", age: "30 Anos", situacao: "cancelado", level: "Rotina", source: "https://avatars.githubusercontent.com/u/125310213?v=4" },
-    { id: 7, nome: "Kamille Junior", age: "31 Anos", situacao: "cancelado", level: "Exame", source: "https://avatars.githubusercontent.com/u/125273621?v=4" }
+    { id: 1, nome: "Paulo Oliveira", age: "25", situacao: "pendente", level: "Rotina", source: "https://avatars.githubusercontent.com/u/125275514?v=4", email: 'paulo@email.com', profile: "Médico", speciality: "Cardiologista", crm: 'CRM-123456' },
+    { id: 2, nome: "Carlos Roque", age: "26", situacao: "realizado", level: "Exame", source: "https://avatars.githubusercontent.com/u/125273727?v=4", email: 'carlos@email.com', profile: "Médico", speciality: "Cardiologista", crm: 'CRM-123456' },
+    { id: 3, nome: "Luiz Carlos", age: "27", situacao: "realizado", level: "Urgência", source: "https://avatars.githubusercontent.com/u/134458811?v=4", email: 'luiz@email.com', profile: "Paciente" },
+    { id: 4, nome: "Lucas Santos", age: "28", situacao: "cancelado", level: "Rotina", source: "https://avatars.githubusercontent.com/u/125273798?v=4", email: 'lucas@email.com', profile: "Paciente" },
+    { id: 5, nome: "Ana Santos", age: "29", situacao: "cancelado", level: "Urgência", source: "https://avatars.githubusercontent.com/u/133692577?v=4", email: 'ana@email.com', profile: "Paciente" },
+    { id: 6, nome: "Everton Araujo", age: "30", situacao: "cancelado", level: "Rotina", source: "https://avatars.githubusercontent.com/u/125310213?v=4", email: 'evertoon@email.com', profile: "Paciente" },
+    { id: 7, nome: "Kamille Junior", age: "31", situacao: "cancelado", level: "Exame", source: "https://avatars.githubusercontent.com/u/125273621?v=4", email: 'kamille@email.com', profile: "Paciente" }
 ]
 
 export const Appointments = ({ navigation }) => {
@@ -48,13 +48,18 @@ export const Appointments = ({ navigation }) => {
                     statusList == item.situacao && (
                         <ListItemContainer>
                             <AppointmentCard
+                                navigation={navigation}
                                 name={item.nome}
                                 age={item.age}
+                                profile={item.profile}
                                 level={item.level}
+                                crm={item.crm}
                                 imageSource={item.source}
                                 situacao={item.situacao}
+                                speciality={item.speciality}
+                                email={item.email}
                                 onPressCancel={() => setShowModalCancel(true)}
-                                onPressAppointment={() => setShowModalAppointment(true)}
+
                             />
                         </ListItemContainer>
                     )
@@ -64,7 +69,7 @@ export const Appointments = ({ navigation }) => {
                 visible={showModalCancel}
                 setShowModalCancel={setShowModalCancel}
             />
-             
+
             <ScheduleAppointment
                 visible={showModalAgendamento}
                 navigation={navigation}
@@ -73,8 +78,9 @@ export const Appointments = ({ navigation }) => {
 
 
 
-            {profile === 'Paciente' && (
 
+
+            {profile === 'Paciente' && (
                 <AppointmentButton onPress={() => setShowModalAgendamento(true)}>
                     <MedicalIcon />
                 </AppointmentButton>

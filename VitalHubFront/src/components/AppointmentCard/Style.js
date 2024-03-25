@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 
-export const ContainerCardsList = styled.View`
+export const ContainerCardsList = styled.TouchableOpacity`
     width: 90% ;
     height: 102px;
     margin-top: 6px;
