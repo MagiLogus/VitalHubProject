@@ -29,6 +29,7 @@
     "react": "18.2.0",
     "react-native": "^0.73.4",
     "react-native-calendar-strip": "^2.2.6",
+    "react-native-loader-kit": "^2.0.8",
     "react-native-maps": "1.10.0",
     "react-native-shadow": "^1.2.2",
     "react-native-svg": "^14.1.0",

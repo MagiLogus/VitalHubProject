@@ -11,6 +11,8 @@ margin-top: 30px;
 border: 1px solid #496BBA;
 align-items: center;
 justify-content: center;
+flex-direction: row;
+gap: 20px;
 `
 
 export const ButtonGoogle = styled(Button)`

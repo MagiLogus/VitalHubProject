@@ -6,6 +6,13 @@ align-items: center;
 background-color: #FAFAFA;
 `
 
+export const TextAlertContainer = styled.SafeAreaView`
+width: 90%;
+margin-top: 20px;
+align-items: center;
+justify-content: center;
+`
+
 export const ContentSubtitle = styled.View`
 width: 90%;
 align-self: center;

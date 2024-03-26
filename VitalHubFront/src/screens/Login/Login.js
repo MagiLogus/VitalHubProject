@@ -1,32 +1,49 @@
 import { StatusBar } from "expo-status-bar";
 import { Button, ButtonGoogle } from "../../components/Button/Style";
-import { Container } from "../../components/Container/Style";
+import { Container, TextAlertContainer } from "../../components/Container/Style";
 import { GoogleIcon } from "../../components/Icons/Style";
 import { Input } from "../../components/Input/Style";
 import { LinkBold, LinkMedium } from "../../components/Links/Style";
 import { Logo } from "../../components/Logo/Style";
 import { ButtonTitle, ButtonTitleGoogle, Title } from "../../components/Title/Style";
-import { ContentAccount, TextAccount } from "./Style";
+import { ContentAccount, TextAccount, TextAlert } from "./Style";
 import { React, useState } from "react";
 import { api, loginResource } from "../../service/service";
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+
 
 export const Login = ({ navigation }) => {
     const [email, setEmail] = useState('paulo@email.com')
     const [senha, setSenha] = useState('123456')
+    const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
-    // Chamar a funcao de login 
     async function Login() {
 
-        // Chama a api de Login
-        const response = await api.post(loginResource, {
-            email: email,
-            senha: senha
-        })
+        try {
+            setLoading(true);
 
-        await AsyncStorage.setItem('token', JSON.stringify(response.data))
+            const response = await api.post(loginResource, {
+                email: email,
+                senha: senha
+            });
 
-        navigation.replace("Main")
+            await AsyncStorage.setItem('token', JSON.stringify(response.data));
+
+            setLoading(false);
+
+            navigation.replace("Main");
+
+        } catch (error) {
+            setLoading(true);
+            setErrorMessage("Erro ao fazer login. Por favor, verifique suas credenciais e tente novamente.");
+            setTimeout(() => {
+                setErrorMessage("");
+                setLoading(false);
+            }, 3000);
+
+        }
     }
 
     async function PasswordRecover() {
@@ -35,6 +52,14 @@ export const Login = ({ navigation }) => {
 
     async function CreateAccount() {
         navigation.replace("CreateAccount")
+    }
+
+    function ErrorMessage({ message }) {
+        return (
+            <TextAlertContainer>
+                <TextAlert>{message}</TextAlert>
+            </TextAlertContainer>
+        );
     }
 
     return (
@@ -54,12 +79,10 @@ export const Login = ({ navigation }) => {
             />
             <LinkMedium onPress={() => PasswordRecover()}>Esqueceu sua senha?</LinkMedium>
             <Button width="90%" onPress={() => { Login() }}>
+                {loading && <ActivityIndicator size="small" color="#fff" />}
                 <ButtonTitle>Entrar</ButtonTitle>
             </Button>
-            <ButtonGoogle width="90%">
-                <GoogleIcon />
-                <ButtonTitleGoogle>Entrar com Google</ButtonTitleGoogle>
-            </ButtonGoogle>
+            <ErrorMessage message={errorMessage} />
             <ContentAccount>
                 <TextAccount>Não tem conta? <LinkBold onPress={() => CreateAccount()}>Crie uma conta agora!</LinkBold></TextAccount>
             </ContentAccount>

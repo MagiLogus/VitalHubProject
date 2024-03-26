@@ -12,3 +12,8 @@ export const TextAccount = styled.Text`
 font-size: 16px;
 font-family: "MontserratAlternates_600SemiBold";
 `
+export const TextAlert = styled.Text`
+font-size: 16px;
+font-family: "Quicksand_500Medium";
+color: red;
+`
