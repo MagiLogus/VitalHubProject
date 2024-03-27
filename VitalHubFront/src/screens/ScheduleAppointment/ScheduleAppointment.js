@@ -18,7 +18,7 @@ export const ScheduleAppointment = ({ navigation, visible = true, setShowModalAg
 
   async function handleContinue() {
     await setShowModalAgendamento(false)
-    navigation.replace("Selecionar clinica")
+    navigation.replace("SelectDoctor")
   }
 
   return (

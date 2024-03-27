@@ -3,7 +3,7 @@ import { FlatList } from "react-native";
 
 export const ListComponent = styled(FlatList)`
     width: 100% ;
-    margin-top: 10px ;
+    margin-top: 35px ;
 `
 export const ListItemContainer = styled.View`
     align-items: center;

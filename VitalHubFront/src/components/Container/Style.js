@@ -39,9 +39,7 @@ export const ImageDoctor = styled.Image`
 width: 77px;
 height: 80px;
 border-radius: 5px;
-background-image: cover;
 margin-left: 10px;
-
 `
 
 export const TextBoxContainer = styled.View`
@@ -177,24 +175,18 @@ export const CardContainer = styled.View`
 width: 100%;
 justify-content: center;
 align-items: center;
-gap: 12px;
-margin-top: 35px;
-padding: 10px;
+padding: 12px;
 `
 
-export const DoctorCard = styled.View`
-width: 100%;
-height: 102px;
-border-radius: 5px;
-background: #FFF;
-elevation: 4;
-shadow-color: #000;
-shadow-offset: 4px 4px;
-shadow-opacity: 0.15;
-shadow-radius: 15px;
-flex-direction: row;
-align-items: center;
-`
+export const DoctorCard = styled.TouchableOpacity`
+  width: 90%;
+  height: 102px;
+  border-radius: 5px;
+  elevation: 5;
+  flex-direction: row;
+  align-items: center;
+ border-color: ${(props) => props.selected ? '2px solid #496BBA' : '2px solid black'};
+`;
 
 export const TextContainer = styled.View`
 height: 100%;
