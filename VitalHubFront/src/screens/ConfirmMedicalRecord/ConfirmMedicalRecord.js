@@ -4,7 +4,12 @@ import { AgeContainer, Container, ImageContainer, ScrollViewContainer, TextBoxAr
 import { AgeTitle, ButtonTitle, EmailTitle, TextBoxText, TextBoxTitle, Title } from "../../components/Title/Style";
 import { LinkAction } from "../../components/Links/Style";
 
-export const ConfirmMedicalRecord = () => {
+export const ConfirmMedicalRecord = ({ navigation }) => {
+
+    async function Main() {
+        navigation.replace("Main");
+    }
+
     return (
         <Container>
             <StatusBar translucent backgroundColor="transparent" />
@@ -45,7 +50,7 @@ export const ConfirmMedicalRecord = () => {
                     <Button>
                         <ButtonTitle>Editar</ButtonTitle>
                     </Button>
-                    <LinkAction>Cancelar</LinkAction>
+                    <LinkAction onPress={Main}>Voltar</LinkAction>
                 </ScrollView>
             </ScrollViewContainer>
 

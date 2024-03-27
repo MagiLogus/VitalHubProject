@@ -1,14 +1,14 @@
-import { Container, DoctorCard, ImageDoctor, TextContainer } from "../Container/Style";
-import { DoctorSubtitle, EmailTitle, Title, TitleDoctor } from "../Title/Style";
+import { DoctorCard, ImageDoctor, TextContainer } from "../Container/Style";
+import { DoctorSubtitle, TitleDoctor } from "../Title/Style";
 
-export const SelectDoctorCard = () => {
+export const SelectDoctorCard = ({ name, specialty }) => {
     return (
         <>
             <DoctorCard>
                 <ImageDoctor source={require("../../assets/images/dra_alessandra.png")} />
                 <TextContainer>
-                    <TitleDoctor>Dra Alessandra</TitleDoctor>
-                    <DoctorSubtitle>Demartologa, Esteticista</DoctorSubtitle>
+                    <TitleDoctor>{name}</TitleDoctor>
+                    <DoctorSubtitle>{specialty}</DoctorSubtitle>
                 </TextContainer>
             </DoctorCard>
         </>

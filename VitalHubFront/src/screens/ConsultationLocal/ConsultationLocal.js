@@ -3,10 +3,17 @@ import { Map } from '../../components/Map/Style';
 import { Marker } from 'react-native-maps';
 import { AgeTitle, TextBoxText, TextBoxTitle, Title } from "../../components/Title/Style";
 import { LinkAction } from "../../components/Links/Style";
+import { StatusBar } from "expo-status-bar";
 
-export const ConsultationLocal = () => {
+export const ConsultationLocal = ({ navigation }) => {
+
+  async function Main() {
+    navigation.replace("Main");
+  }
+
   return (
     <Container>
+      <StatusBar translucent backgroundColor="transparent" />
       <Map
         initialRegion={{
           latitude: -23.6152959,
@@ -50,7 +57,7 @@ export const ConsultationLocal = () => {
               </TextBoxArea>
             </TextBoxContainer>
           </TextBoxContainerRow>
-          <LinkAction>Voltar</LinkAction>
+          <LinkAction onPress={Main}>Voltar</LinkAction>
         </MapInformationContainer>
       </MapInformation>
     </Container>
