@@ -1,16 +1,15 @@
 import { StatusBar } from "expo-status-bar";
-import { Button, ButtonGoogle } from "../../components/Button/Style";
+import { Button } from "../../components/Button/Style";
 import { Container, TextAlertContainer } from "../../components/Container/Style";
-import { GoogleIcon } from "../../components/Icons/Style";
 import { Input } from "../../components/Input/Style";
 import { LinkBold, LinkMedium } from "../../components/Links/Style";
 import { Logo } from "../../components/Logo/Style";
-import { ButtonTitle, ButtonTitleGoogle, Title } from "../../components/Title/Style";
+import { ButtonTitle, Title } from "../../components/Title/Style";
 import { ContentAccount, TextAccount, TextAlert } from "./Style";
 import { React, useState } from "react";
 import { api, loginResource } from "../../service/service";
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 
 
 export const Login = ({ navigation }) => {
@@ -20,7 +19,6 @@ export const Login = ({ navigation }) => {
     const [errorMessage, setErrorMessage] = useState("");
 
     async function Login() {
-
         try {
             setLoading(true);
 
@@ -34,7 +32,6 @@ export const Login = ({ navigation }) => {
             setLoading(false);
 
             navigation.replace("Main");
-
         } catch (error) {
             setLoading(true);
             setErrorMessage("Erro ao fazer login. Por favor, verifique suas credenciais e tente novamente.");
@@ -42,7 +39,6 @@ export const Login = ({ navigation }) => {
                 setErrorMessage("");
                 setLoading(false);
             }, 3000);
-
         }
     }
 

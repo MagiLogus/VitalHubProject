@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const loginResource = "/Login";
-export const userResource = "/Login";
+export const profileResource = "/Usuario/BuscarUsuarioPorId";
 export const doctorResource = "/Medicos";
 
 const portApi = "4466";

@@ -31,8 +31,7 @@ margin-top: 20px;
 
 export const ImageContainer = styled.Image`
 width: 100%;
-height: 40%;
-background-size: cover;
+height: 280px;
 `
 
 export const ImageDoctor = styled.Image`
@@ -157,7 +156,7 @@ flex: 1;
 width: 100%;
 border-radius: 10px 10px 0px 0px;
 background: #fff;
-elevation: 4; 
+elevation: 5; 
 shadow-color: rgba(0, 0, 0, 0.1);
 shadow-offset: 0px -4px;
 shadow-opacity: 1;
@@ -175,7 +174,7 @@ export const CardContainer = styled.View`
 width: 100%;
 justify-content: center;
 align-items: center;
-padding: 12px;
+padding-bottom: 12px;
 `
 
 export const DoctorCard = styled.TouchableOpacity`
@@ -183,9 +182,11 @@ export const DoctorCard = styled.TouchableOpacity`
   height: 102px;
   border-radius: 5px;
   elevation: 5;
+  background: #FFF;
   flex-direction: row;
   align-items: center;
- border-color: ${(props) => props.selected ? '2px solid #496BBA' : '2px solid black'};
+  border-width: 2px; 
+  border-color: ${(props) => (props.selected ? "#496BBA" : "transparent")}; 
 `;
 
 export const TextContainer = styled.View`

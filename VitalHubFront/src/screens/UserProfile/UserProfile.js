@@ -5,11 +5,13 @@ import { ButtonTitle, EmailTitle, TextBoxText, TextBoxTitle, Title } from "../..
 import { userDecodeToken } from "../../utils/Auth";
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useEffect, useState } from "react";
-import { api, userResource } from "../../service/service";
+import { api, profileResource } from "../../service/service";
 
 export const UserProfile = ({ navigation }) => {
 
-    const [user, setUser] = useState([])
+    const [user, setUser] = useState([]);
+    const [profile, setProfile] = useState([]);
+
 
     async function profileLoad() {
         const token = await userDecodeToken();
@@ -23,13 +25,11 @@ export const UserProfile = ({ navigation }) => {
 
     useEffect(() => {
         async function ListUserProfile() {
-
-            const response = await api.get(`${userResource}/${user.id}`);
+            const response = await api.get(`${profileResource}/${user.id}`);
             const data = response.data;
-            setUserData(data);
-
+            setProfile(data);
+            console.log(data);
         }
-
         ListUserProfile();
     }, []);
 
@@ -44,7 +44,6 @@ export const UserProfile = ({ navigation }) => {
         } else {
             console.log('Erro ao remover o token.');
         }
-
         navigation.replace("Login");
     }
 
@@ -54,31 +53,31 @@ export const UserProfile = ({ navigation }) => {
             <ImageContainer source={require("../../assets/images/user_profile.png")} />
             <ScrollViewContainer>
                 <ScrollView style={{ width: "100%" }} showsVerticalScrollIndicator={false} overScrollMode="never">
-                    <Title>{user.name}</Title>
-                    <EmailTitle>{user.email}</EmailTitle>
+                    <Title>{profile.nome}</Title>
+                    <EmailTitle>{profile.email}</EmailTitle>
                     <TextBoxContainer>
                         <TextBoxTitle>Data de Nascimento:</TextBoxTitle>
                         <TextBoxArea>
-                            <TextBoxText>04/05/1999</TextBoxText>
+                            <TextBoxText>{new Date(profile.paciente.dataNascimento).toLocaleDateString()}</TextBoxText>
                         </TextBoxArea>
                     </TextBoxContainer>
                     <TextBoxContainer>
                         <TextBoxTitle>CPF:</TextBoxTitle>
                         <TextBoxArea>
-                            <TextBoxText>859********</TextBoxText>
+                            <TextBoxText>{profile.paciente.cpf.substring(0, 3) + '*'.repeat(profile.paciente.cpf.length - 3)}</TextBoxText>
                         </TextBoxArea>
                     </TextBoxContainer>
                     <TextBoxContainer>
                         <TextBoxTitle>Endereço:</TextBoxTitle>
                         <TextBoxArea>
-                            <TextBoxText>Rua: Vicenso Silva, 987</TextBoxText>
+                            <TextBoxText> {profile.paciente.endereco.logradouro}</TextBoxText>
                         </TextBoxArea>
                     </TextBoxContainer>
                     <TextBoxContainerRow>
                         <TextBoxContainer fieldWidth={45}>
                             <TextBoxTitle>Cep:</TextBoxTitle>
                             <TextBoxArea >
-                                <TextBoxText>06548-909</TextBoxText>
+                                <TextBoxText>{profile.paciente.endereco.cep}</TextBoxText>
                             </TextBoxArea>
                         </TextBoxContainer>
                         <TextBoxContainer fieldWidth={45}>

@@ -1,36 +1,37 @@
 import { StatusBar } from "expo-status-bar";
-import { CardContainer, Container, ScrollViewContainer } from "../../components/Container/Style";
+import { CardContainer, Container } from "../../components/Container/Style";
 import { ButtonTitle, TitleScreen } from "../../components/Title/Style";
-import { ScrollView } from "react-native";
-import { SelectDoctorCard } from "../../components/SelectDoctorCard/Style";
+import { SelectDoctorCard } from "../../components/SelectDoctorCard/SelectDoctorCard";
 import { Button } from "../../components/Button/Style";
 import { LinkAction } from "../../components/Links/Style";
 import { useEffect, useState } from "react";
 import { api, doctorResource } from "../../service/service";
 import { ListComponent, ListItemContainer } from "../../components/List/List";
 
-
 export const SelectDoctor = ({ navigation }) => {
     const [doctorList, setDoctorList] = useState([]);
+    const [selectedDoctor, setSelectedDoctor] = useState(null);
 
     async function ListDoctor() {
-        await api.get(doctorResource)
-            .then(response => {
-                setDoctorList(response.data)
-            }).catch(error => {
-                console.log(error);
-            })
+        try {
+            const response = await api.get(doctorResource);
+            setDoctorList(response.data);
+        } catch (error) {
+            console.log(error);
+        }
     }
-
-    useEffect(() => {
-        ListDoctor();
-    }, [])
 
     async function Return() {
         navigation.replace("Main");
     }
 
+    const handleDoctorSelect = (doctorId) => {
+        setSelectedDoctor(doctorId);
+    };
 
+    useEffect(() => {
+        ListDoctor();
+    }, [])
 
     return (
         <Container>
@@ -42,7 +43,8 @@ export const SelectDoctor = ({ navigation }) => {
                 renderItem={({ item }) => (
                     <ListItemContainer>
                         <CardContainer>
-                            <SelectDoctorCard name={item.idNavigation.nome} specialty={item.especialidade.especialidade1}/>
+                            <SelectDoctorCard name={item.idNavigation.nome} specialty={item.especialidade.especialidade1} selected={selectedDoctor === item.id} // Define se o médico está selecionado com base no estado
+                                onPress={() => handleDoctorSelect(item.id)} />
                         </CardContainer>
                     </ListItemContainer>
                 )}
