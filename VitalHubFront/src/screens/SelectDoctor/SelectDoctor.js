@@ -22,7 +22,7 @@ export const SelectDoctor = ({ navigation }) => {
     }
 
     async function Return() {
-        navigation.replace("Main");
+        navigation.replace("SelectClinic");
     }
 
     const handleDoctorSelect = (doctorId) => {
@@ -52,7 +52,7 @@ export const SelectDoctor = ({ navigation }) => {
             <Button width={"90%"}>
                 <ButtonTitle>Continuar</ButtonTitle>
             </Button>
-            <LinkAction onPress={Return}>Cancelar</LinkAction>
+            <LinkAction onPress={Return}>Voltar</LinkAction>
         </Container>
     );
 };

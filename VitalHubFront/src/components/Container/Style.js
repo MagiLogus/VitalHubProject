@@ -196,39 +196,42 @@ margin-left: 10px;
 
 export const ClockCard = styled.View`
     flex-direction: row;
-    padding: 4px 23px;
+    padding: 6px 14px;
     gap: 6px ;
     border-radius: 5px ;
-    background-color: ${(props) => props.situacao == "agendadas" ? "#E8FCFD" : "#F1F0F5"} ;
+    background-color: #E8FCFD ;
+    margin-right: 18px;
+    align-items: center;
+    justify-content: center;
 `
 
-export const ContainerCardsList = styled.View`
-    width: 100% ;
-    margin-bottom:12px ;
-    padding: 10px 10px;
-    border-radius: 5px ;
-    flex-direction: row ;
-    background-color:#fff ;
-    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.08);
-    gap: 10px ;
+export const ContainerCardsList = styled.TouchableOpacity`
+  width: 90%;
+  height: 84px;
+  border-radius: 5px;
+  elevation: 5;
+  background: #FFF;
+  flex-direction: column;
+  align-items: center;
+  border-width: 2px; 
+  border-color: ${(props) => (props.selected ? "#496BBA" : "transparent")}; 
 `
-
 
 export const ContainerCardsListCard = styled(ContainerCardsList)`
-    width: 90%;
-    flex-direction: column;
-    padding: 18px 18px 10px 18px;
+    
 `
 export const ContentSelectClinic = styled.View`
     width: 100%;
     justify-content: space-between;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 10px;
 `
 export const IconContent = styled.View`
     width: 42px;
     height: 20px;
     flex-direction: row;
     gap: 2px;
+    justify-content: center;
+    align-items: center;
+    margin-right: 18px;
 `

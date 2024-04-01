@@ -96,9 +96,12 @@ export const TextAge = styled.Text`
 `
 export const TextBold = styled(TextAge)`
     font-family: "Quicksand_600SemiBold";
+    color: ${(props) => props.color || "#8C8A97"};
     `
 export const ProfileName = styled(Title)`   
     font-size: 16px ;
+    margin-left: 18px;
+    margin-top: 18px;
 `
 export const NumberStar = styled.Text`
     font-family: "Quicksand_600SemiBold";
@@ -108,4 +111,6 @@ export const NumberStar = styled.Text`
 
 export const Local = styled(NumberStar)`
     color: #4E4B59;
+    margin-left: 18px;
+    margin-top: 10px;
 `
