@@ -12,7 +12,7 @@ export const Main = () => {
       initialRouteName="Appointments"
 
       screenOptions={({ route }) => ({
-        tabBarStyle: { backgroundColor: "#FFFFFF", height: 60 },
+        tabBarStyle: { backgroundColor: "#FFFFFF", height: 80 },
         tabBarActiveBackgroundColor: "transparent",
         tabBarShowLabel: false,
         headerShown: false,

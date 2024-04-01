@@ -1,15 +1,15 @@
+import React, { useEffect, useState } from "react";
 import { ScrollView, StatusBar } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ProfileResource, api, userResource } from "../../service/service"; 
 import { Button, ButtonLogoff } from "../../components/Button/Style";
 import { Container, ImageContainer, ScrollViewContainer, TextBoxArea, TextBoxContainer, TextBoxContainerRow } from "../../components/Container/Style";
 import { ButtonTitle, EmailTitle, TextBoxText, TextBoxTitle, Title } from "../../components/Title/Style";
 import { userDecodeToken } from "../../utils/Auth";
-import AsyncStorage from "@react-native-async-storage/async-storage"
-import { useEffect, useState } from "react";
-import { api, userResource } from "../../service/service";
 
 export const UserProfile = ({ navigation }) => {
-
-    const [user, setUser] = useState([])
+    const [user, setUser] = useState({});
+    const [profile, setProfile] = useState({});
 
     async function profileLoad() {
         const token = await userDecodeToken();
@@ -23,28 +23,19 @@ export const UserProfile = ({ navigation }) => {
 
     useEffect(() => {
         async function ListUserProfile() {
-
-            const response = await api.get(`${userResource}/${user.id}`);
+            const response = await api.get(`${ProfileResource}?id=${user.id}`); 
             const data = response.data;
-            setUserData(data);
-
+            setProfile(data);
+            console.log(data);
         }
-
-        ListUserProfile();
-    }, []);
+        if (user.id) { // Adicionar verificação se user.id está definido
+            ListUserProfile();
+        }
+    }, [user.id]); // Adicionar user.id como dependência do useEffect
 
     async function Logoff() {
         await AsyncStorage.removeItem('token');
-
-        const token = await AsyncStorage.getItem('token');
-
-        if (!token) {
-            console.log('Token removido com sucesso.');
-            console.log(token);
-        } else {
-            console.log('Erro ao remover o token.');
-        }
-
+        console.log('Token removido com sucesso.');
         navigation.replace("Login");
     }
 
@@ -54,36 +45,36 @@ export const UserProfile = ({ navigation }) => {
             <ImageContainer source={require("../../assets/images/user_profile.png")} />
             <ScrollViewContainer>
                 <ScrollView style={{ width: "100%" }} showsVerticalScrollIndicator={false} overScrollMode="never">
-                    <Title>{user.name}</Title>
-                    <EmailTitle>{user.email}</EmailTitle>
+                    <Title>{profile.nome}</Title>
+                    <EmailTitle>{profile.email}</EmailTitle>
                     <TextBoxContainer>
                         <TextBoxTitle>Data de Nascimento:</TextBoxTitle>
                         <TextBoxArea>
-                            <TextBoxText>04/05/1999</TextBoxText>
+                            <TextBoxText>{profile.paciente?.dataNascimento ? new Date(profile.paciente.dataNascimento).toLocaleDateString() : 'Data de nascimento não disponível'}</TextBoxText>
                         </TextBoxArea>
                     </TextBoxContainer>
                     <TextBoxContainer>
                         <TextBoxTitle>CPF:</TextBoxTitle>
                         <TextBoxArea>
-                            <TextBoxText>859********</TextBoxText>
+                            <TextBoxText>{profile.paciente?.cpf ? profile.paciente.cpf.substring(0, 3) + '*'.repeat(profile.paciente.cpf.length - 3) : 'CPF não disponível'}</TextBoxText>
                         </TextBoxArea>
                     </TextBoxContainer>
                     <TextBoxContainer>
                         <TextBoxTitle>Endereço:</TextBoxTitle>
                         <TextBoxArea>
-                            <TextBoxText>Rua: Vicenso Silva, 987</TextBoxText>
+                            <TextBoxText>{profile && profile.paciente && profile.paciente.endereco ? profile.paciente.endereco.logradouro : 'Endereço não disponível'}</TextBoxText>
                         </TextBoxArea>
                     </TextBoxContainer>
                     <TextBoxContainerRow>
                         <TextBoxContainer fieldWidth={45}>
                             <TextBoxTitle>Cep:</TextBoxTitle>
-                            <TextBoxArea >
-                                <TextBoxText>06548-909</TextBoxText>
+                            <TextBoxArea>
+                                <TextBoxText>{profile && profile.paciente && profile.paciente.endereco ? profile.paciente.endereco.cep : 'Cep não disponível'}</TextBoxText>
                             </TextBoxArea>
                         </TextBoxContainer>
                         <TextBoxContainer fieldWidth={45}>
                             <TextBoxTitle>Cidade:</TextBoxTitle>
-                            <TextBoxArea >
+                            <TextBoxArea>
                                 <TextBoxText>Moema-SP</TextBoxText>
                             </TextBoxArea>
                         </TextBoxContainer>

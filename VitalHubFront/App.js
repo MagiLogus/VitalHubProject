@@ -16,6 +16,7 @@ import { SelectDoctor } from './src/screens/SelectDoctor/SelectDoctor';
 import { SelectClinic } from './src/screens/SelectClinic/SelectClinic';
 import { Main } from './src/screens/Main/Main';
 import { InsertMedicalRecord } from './src/screens/InsertMedicalRecord/InsertMedicalRecord';
+import { StatusBar } from 'expo-status-bar';
 
 
 const Stack = createNativeStackNavigator();
@@ -30,6 +31,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
+       <StatusBar />
       <Stack.Navigator >
         <Stack.Screen name='Login' component={Login} options={{ title: 'Login', headerShown: false }} />
         <Stack.Screen name='PasswordRecover' component={PasswordRecover} options={{ title: 'Recuperar Senha', headerShown: false }} />
