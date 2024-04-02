@@ -3,7 +3,7 @@ import { Container, FilterAppointment, } from "../../components/Container/Style"
 import { MedicalIcon } from "../../components/Icons/Style";
 import { CalendarList } from "../../components/Calendar/Calendar";
 import { TabsListAppointment } from "../../components/TabsListAppointment/TabsListAppointment"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppointmentCard } from "../../components/AppointmentCard/AppointmentCard";
 import { ListComponent, ListItemContainer } from "../../components/List/List";
 import { CancellationModal } from "../../components/CancellationModal/CancellationModal";
@@ -26,16 +26,23 @@ export const Appointments = ({ navigation }) => {
     const [showModalCancel, setShowModalCancel] = useState(false);
     const [showModalAgendamento, setShowModalAgendamento] = useState(false);
     const [profile, setProfile] = useState("Paciente");
+    const [dateAppointment, setDateAppointment] = useState("");
+
 
     async function UserProfile() {
         navigation.replace("UserProfile");
     }
 
+    useEffect(() => {
+        console.log(dateAppointment);
+    }, [dateAppointment]);
+
+
     return (
         <Container>
             <StatusBar translucent backgroundColor="transparent" />
             <Header name="Paulo Oliveira" imageSource={("https://avatars.githubusercontent.com/u/125275514?v=4")} profile={profile} onPress={UserProfile} />
-            <CalendarList />
+            <CalendarList setDateAppointment={setDateAppointment} />
             <FilterAppointment>
                 <TabsListAppointment textButton={"Agendadas"} clickButton={statusList === "pendente"} onPress={() => setStatusList("pendente")} />
                 <TabsListAppointment textButton={"Realizadas"} clickButton={statusList === "realizado"} onPress={() => setStatusList("realizado")} />
@@ -75,10 +82,6 @@ export const Appointments = ({ navigation }) => {
                 navigation={navigation}
                 setShowModalAgendamento={setShowModalAgendamento}
             />
-
-
-
-
 
             {profile === 'Paciente' && (
                 <AppointmentButton onPress={() => setShowModalAgendamento(true)}>

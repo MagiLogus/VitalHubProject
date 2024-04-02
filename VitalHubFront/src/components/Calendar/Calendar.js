@@ -3,11 +3,11 @@ import moment from "moment";
 import { StyledCalendarStrip } from './Style';
 import { useFonts, MontserratAlternates_600SemiBold } from '@expo-google-fonts/montserrat-alternates';
 
- export const CalendarList = () => {
+export const CalendarList = ({ setDateAppointment }) => {
 
   const [fontsLoaded, fontsError] = useFonts({
     MontserratAlternates_600SemiBold
-  }); 
+  });
 
   if (!fontsLoaded && !fontsError) {
     return null;
@@ -29,9 +29,9 @@ import { useFonts, MontserratAlternates_600SemiBold } from '@expo-google-fonts/m
 
     weekdaysShort: "Dom_Seg_Ter_Qua_Qui_Sex_Sáb".split("_"),
 
-    weekdaysMin : 'dom_2ª_3ª_4ª_5ª_6ª_sáb'.split('_'),
+    weekdaysMin: 'dom_2ª_3ª_4ª_5ª_6ª_sáb'.split('_'),
   });
-  
+
   const currentDate = new Date();
   const startingDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
   const endingDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
@@ -39,19 +39,20 @@ import { useFonts, MontserratAlternates_600SemiBold } from '@expo-google-fonts/m
   return (
     <StyledCalendarStrip
       calendarAnimation={{ type: "sequence", duration: 30 }}
-      daySelectionAnimation={ styles.selectedAnimationStyle }
+      daySelectionAnimation={styles.selectedAnimationStyle}
       iconLeftStyle={styles.iconsStyle}
       iconRightStyle={styles.iconsStyle}
       selectedDate={currentDate}
+      onDateSelected={date => setDateAppointment(moment(date).format('YYYY-MM-DD'))}
       startingDate={moment()}
       minDate={startingDate}
       maxDate={endingDate}
-      calendarHeaderStyle={ styles.calendarHeaderStyle }
-      dateNumberStyle={ styles.numberDateStyle }
-      dateNameStyle={ styles.nameDateStyle }
-      highlightDateNameStyle={ styles.selectedDateNameStyle }
-      highlightDateNumberStyle={ styles.selectedDateNumberStyle }
-      highlightDateContainerStyle={ styles.selectedContainerStyle }
+      calendarHeaderStyle={styles.calendarHeaderStyle}
+      dateNumberStyle={styles.numberDateStyle}
+      dateNameStyle={styles.nameDateStyle}
+      highlightDateNameStyle={styles.selectedDateNameStyle}
+      highlightDateNumberStyle={styles.selectedDateNumberStyle}
+      highlightDateContainerStyle={styles.selectedContainerStyle}
       iconContainer={{ flex: 0.1 }}
       scrollable={true}
     />
@@ -59,40 +60,40 @@ import { useFonts, MontserratAlternates_600SemiBold } from '@expo-google-fonts/m
 };
 
 const styles = StyleSheet.create({
-  iconsStyle : {
-    display : 'none'
+  iconsStyle: {
+    display: 'none'
   },
-  calendarHeaderStyle : {
+  calendarHeaderStyle: {
     fontSize: 20,
     textAlign: "center",
-    alignSelf : 'flex-start',
-    color : '#4E4B59',
+    alignSelf: 'flex-start',
+    color: '#4E4B59',
     fontFamily: "MontserratAlternates_600SemiBold",
     paddingHorizontal: `5%`
   },
-  nameDateStyle : {
+  nameDateStyle: {
     color: "#ACABB7",
     fontSize: 12,
-    textTransform : 'capitalize'
+    textTransform: 'capitalize'
   },
-  numberDateStyle : {
+  numberDateStyle: {
     color: "#5F5C6B",
     fontSize: 16
   },
-  selectedDateNameStyle : {
+  selectedDateNameStyle: {
     color: "white",
     fontSize: 12,
     fontWeight: "bold",
-    textTransform : 'capitalize'
+    textTransform: 'capitalize'
   },
-  selectedDateNumberStyle : {
+  selectedDateNumberStyle: {
     color: "white",
     fontSize: 14
   },
-  selectedContainerStyle : {
+  selectedContainerStyle: {
     backgroundColor: `#60BFC5`
   },
-  selectedAnimationStyle : {
+  selectedAnimationStyle: {
     type: "border",
     duration: 200,
     borderWidth: 2,
