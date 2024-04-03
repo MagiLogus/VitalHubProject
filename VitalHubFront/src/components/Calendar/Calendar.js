@@ -43,7 +43,7 @@ export const CalendarList = ({ setDateAppointment }) => {
       iconLeftStyle={styles.iconsStyle}
       iconRightStyle={styles.iconsStyle}
       selectedDate={currentDate}
-      onDateSelected={date => setDateAppointment(moment(date).format('YYYY-MM-DD'))}
+      onDateSelected={date => setDateAppointment(moment(date).format('YYYY-DD-MM'))}
       startingDate={moment()}
       minDate={startingDate}
       maxDate={endingDate}

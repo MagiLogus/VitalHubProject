@@ -10,6 +10,7 @@ import { CancellationModal } from "../../components/CancellationModal/Cancellati
 import { AppointmentButton } from "../../components/Button/Style";
 import { Header } from "../../components/Header/Header";
 import { ScheduleAppointment } from "../../screens/ScheduleAppointment/ScheduleAppointment"
+import { api } from "../../service/service";
 
 const Consultas = [
     { id: 1, nome: "Paulo Oliveira", age: "25", situacao: "pendente", level: "Rotina", source: "https://avatars.githubusercontent.com/u/125275514?v=4", email: 'paulo@email.com', profile: "Médico", speciality: "Cardiologista", crm: 'CRM-123456' },
@@ -28,6 +29,18 @@ export const Appointments = ({ navigation }) => {
     const [profile, setProfile] = useState("Paciente");
     const [dateAppointment, setDateAppointment] = useState("");
 
+    const [user, setUser] = useState([])
+
+    async function profileLoad() {
+        const token = await userDecodeToken();
+        setProfile(token);
+
+        //setConsultSelect(moment().format)
+    }
+
+    useEffect(() => {
+        profileLoad();
+    }, []);
 
     async function UserProfile() {
         navigation.replace("UserProfile");
@@ -37,11 +50,35 @@ export const Appointments = ({ navigation }) => {
         console.log(dateAppointment);
     }, [dateAppointment]);
 
+    async function ListarConsultas() {
+        const url = (profile.role == 'Medico' ? 'Medico' : 'Paciente')
+        await api.get(`/${url}/BuscarPorData?data=${dateAppointment}&id=${profile.user}`)
+            .then(response => {
+                console.log(response.data);
+                setConsultas(response.data);
+            }).catch(error => {
+                console.log(error);
+            })
+    }
+    // Desestruturando apenas os dados a serem utilizados no momento
+    const { name, role } = profile;
+
+    //Executando a função ProfileLoad
+    useEffect(() => {
+        profileLoad();
+        ListarConsultas()
+    }, [])
+
+    useEffect(() => {
+        if (dateConsult !== '') {
+            ListarConsultas();
+        }
+    }, dateConsult)
 
     return (
         <Container>
             <StatusBar translucent backgroundColor="transparent" />
-            <Header name="Paulo Oliveira" imageSource={("https://avatars.githubusercontent.com/u/125275514?v=4")} profile={profile} onPress={UserProfile} />
+            <Header imageSource={("https://avatars.githubusercontent.com/u/125275514?v=4")} profile={profile} onPress={UserProfile} />
             <CalendarList setDateAppointment={setDateAppointment} />
             <FilterAppointment>
                 <TabsListAppointment textButton={"Agendadas"} clickButton={statusList === "pendente"} onPress={() => setStatusList("pendente")} />

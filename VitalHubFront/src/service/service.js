@@ -7,7 +7,7 @@ export const clinicListResource = "/Clinica/ListarTodas";
 export const patientResource = "/Clinica/ListarTodas";
 
 const portApi = "4466";
-const ip = "172.16.39.122";
+const ip = "192.168.0.6"; 
 const apiUrlLocal = `http://${ip}:${portApi}/api`;
 
 export const api = axios.create({
