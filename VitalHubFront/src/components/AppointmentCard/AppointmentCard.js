@@ -34,7 +34,7 @@ export const AppointmentCard = ({
   const [modalVisible, setModalVisible] = useState(false);
 
   async function navigateBasedOnProfile() {
-    if (profile === 'Médico') {
+    if (profile === 'Medico') {
       await navigation.replace("ViewPrescription");
     } else {
       await navigation.replace("ConfirmMedicalRecord");
