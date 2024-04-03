@@ -12,6 +12,7 @@ import { Header } from "../../components/Header/Header";
 import { ScheduleAppointment } from "../../screens/ScheduleAppointment/ScheduleAppointment"
 import { api } from "../../service/service";
 import { userDecodeToken } from "../../utils/Auth";
+import { differenceInYears } from 'date-fns';
 
 const Consultas = [
     { id: 1, nome: "Paulo Oliveira", age: "25", situacao: "pendente", level: "Rotina", source: "https://avatars.githubusercontent.com/u/125275514?v=4", email: 'paulo@email.com', profile: "Médico", speciality: "Cardiologista", crm: 'CRM-123456' },
@@ -52,8 +53,7 @@ export const Appointments = ({ navigation }) => {
     async function ListarConsultas() {
         const url = (profile.role == 'Medico' ? 'Medico' : 'Pacientes')
         console.log(profile.id);
-        await api.get(`/Pacientes/BuscarPorData?data=${dateAppointment}&id=${profile.id}`)
- 
+        await api.get(`/${url}/BuscarPorData?data=${dateAppointment}&id=${profile.id}`)
             .then(response => {
                 console.log(response.data);
                 setAppointment(response.data);
@@ -66,7 +66,6 @@ export const Appointments = ({ navigation }) => {
         ListarConsultas();
     }, [dateAppointment])
 
-
     return (
         <Container>
             <StatusBar translucent backgroundColor="transparent" />
@@ -74,24 +73,24 @@ export const Appointments = ({ navigation }) => {
             <CalendarList setDateAppointment={setDateAppointment} />
             <FilterAppointment>
                 <TabsListAppointment textButton={"Agendadas"} clickButton={statusList === "pendente"} onPress={() => setStatusList("pendente")} />
-                <TabsListAppointment textButton={"Realizadas"} clickButton={statusList === "realizado"} onPress={() => setStatusList("realizado")} />
+                <TabsListAppointment textButton={"Realizados"} clickButton={statusList === "Realizados"} onPress={() => setStatusList("Realizados")} />
                 <TabsListAppointment textButton={"Canceladas"} clickButton={statusList === "cancelado"} onPress={() => setStatusList("cancelado")} />
             </FilterAppointment>
             <ListComponent
-                data={Consultas}
+                data={appointment}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) =>
-                    statusList == item.situacao && (
+                    statusList == item.situacao.situacao && (
                         <ListItemContainer>
                             <AppointmentCard
                                 navigation={navigation}
-                                name={item.nome}
-                                age={item.age}
+                                name={item.paciente.idNavigation.nome}
+                                age={differenceInYears(new Date(), new Date(item.paciente.dataNascimento))}
                                 profile={item.profile}
-                                level={item.level}
+                                level={item.prioridade.prioridade}
                                 crm={item.crm}
                                 imageSource={item.source}
-                                situacao={item.situacao}
+                                situacao={item.situacao.situacao}
                                 speciality={item.speciality}
                                 email={item.email}
                                 onPressCancel={() => setShowModalCancel(true)}
