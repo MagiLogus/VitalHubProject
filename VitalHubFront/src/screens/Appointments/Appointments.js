@@ -36,7 +36,13 @@ export const Appointments = ({ navigation }) => {
     async function profileLoad() {
         const token = await userDecodeToken();
         setProfile(token);
+        setUser(token.role); //
     }
+
+    
+ async function UserMap() { //
+    navigation.replace("ConsultationLocal");
+}
 
     useEffect(() => {
         profileLoad();
@@ -68,7 +74,7 @@ export const Appointments = ({ navigation }) => {
 
     return (
         <Container>
-            <StatusBar translucent backgroundColor="transparent" />
+            {/* <StatusBar translucent backgroundColor="transparent" /> */}
             <Header imageSource={("https://avatars.githubusercontent.com/u/125275514?v=4")} profile={profile} onPress={UserProfile} />
             <CalendarList setDateAppointment={setDateAppointment} />
             <FilterAppointment>
@@ -110,8 +116,8 @@ export const Appointments = ({ navigation }) => {
                 setShowModalAgendamento={setShowModalAgendamento}
             />
 
-            {profile === 'Pacientes' && (
-                <AppointmentButton onPress={() => setShowModalAgendamento(true)}>
+            {user === 'Pacientes' && (
+                <AppointmentButton onPress={UserMap}>
                     <MedicalIcon />
                 </AppointmentButton>
             )}

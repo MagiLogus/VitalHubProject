@@ -4,11 +4,28 @@ import { Marker } from 'react-native-maps';
 import { AgeTitle, TextBoxText, TextBoxTitle, Title } from "../../components/Title/Style";
 import { LinkAction } from "../../components/Links/Style";
 import { StatusBar } from "expo-status-bar";
+import { api, locationResource } from "../../service/service";
 
-export const ConsultationLocal = ({ navigation }) => {
+export const ConsultationLocal = ({ navigation}) => {
+
+//   useEffect(() => {
+//     async function ListClinicLocation() {
+//         try {
+//             const response = await api.get(`${locationResource}?id=${id}`);
+//             const data = response.data;
+//             setProfile(data);
+//         } catch {
+//             console.log("error");
+//         }
+//     }
+//     ListClinicLocation();
+// }, []);
+
+
 
   async function Main() {
     navigation.replace("Main");
+
   }
 
   return (
