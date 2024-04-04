@@ -28,7 +28,7 @@ export const Appointments = ({ navigation }) => {
     const [statusList, setStatusList] = useState("pendente")
     const [showModalCancel, setShowModalCancel] = useState(false);
     const [showModalAgendamento, setShowModalAgendamento] = useState(false);
-    const [profile, setProfile] = useState("Pacientes");
+    const [profile, setProfile] = useState([]);
     const [dateAppointment, setDateAppointment] = useState("");
     const [appointment, setAppointment] = useState([]);
     const [user, setUser] = useState([])
@@ -36,6 +36,7 @@ export const Appointments = ({ navigation }) => {
     async function profileLoad() {
         const token = await userDecodeToken();
         setProfile(token);
+        setUser(token.role);
     }
 
     useEffect(() => {
@@ -51,7 +52,7 @@ export const Appointments = ({ navigation }) => {
     }, [dateAppointment]);
 
     async function ListarConsultas() {
-        const url = (profile.role == 'Medico' ? 'Medico' : 'Pacientes')
+        const url = (user.role == 'Medico' ? 'Medico' : 'Pacientes')
         console.log(profile.id);
         await api.get(`/${url}/BuscarPorData?data=${dateAppointment}&id=${profile.id}`)
             .then(response => {
@@ -84,7 +85,7 @@ export const Appointments = ({ navigation }) => {
                         <ListItemContainer>
                             <AppointmentCard
                                 navigation={navigation}
-                                name={item.paciente.idNavigation.nome}
+                                name={item.paciente.idNavigation.nome || item.medico.idnavigation.nome}
                                 age={differenceInYears(new Date(), new Date(item.paciente.dataNascimento))}
                                 profile={item.profile}
                                 level={item.prioridade.prioridade}
@@ -110,7 +111,7 @@ export const Appointments = ({ navigation }) => {
                 setShowModalAgendamento={setShowModalAgendamento}
             />
 
-            {profile === 'Pacientes' && (
+            {user === 'Pacientes' && (
                 <AppointmentButton onPress={() => setShowModalAgendamento(true)}>
                     <MedicalIcon />
                 </AppointmentButton>
