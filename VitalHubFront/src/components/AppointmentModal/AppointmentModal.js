@@ -17,27 +17,25 @@ export const AppointmentModal = ({ navigation, name, age, email, imageSource, vi
             <AppointmentContent>
                 <ModalContent>
                     <ModalImage src={imageSource} />
-                    <Title>{profile === "Médico" ? "Dr(a). " : ""}{name}</Title>
+                    <Title>{profile === "Medico" ? "Dr(a). " : ""}{name}</Title>
                     <RowTextModal>
-                        {profile === 'Médico' ? (
+                        {profile === 'Medico' ? (
                             <TextModal>{speciality}</TextModal>
                         ) : (
                             <TextModal>{age} Ano(s)</TextModal>
                         )}
-                        {profile === 'Médico' ? (
+                        {profile === 'Medico' ? (
                             <TextModal>{crm}</TextModal>
                         ) : (
                             <TextModal>{email}</TextModal>
                         )}
                     </RowTextModal>
-
-
-                    {situacao !== "cancelado" && ( // Verifica se a situação não está cancelada
+                    {situacao !== "cancelado" && (
                         <ButtonModal>
-                            {profile === 'Médico' ? ( // Verifica o tipo de perfil
-                                <ButtonTitle onPress={ConsultationLocal}>Ver local da consulta</ButtonTitle> // Botão para médico
+                            {profile === 'Medico' ? (
+                                <ButtonTitle onPress={ConsultationLocal}>Ver local da consulta</ButtonTitle> 
                             ) : (
-                                <ButtonTitle onPress={InsertMedicalRecord}>Inserir Prontuário</ButtonTitle> // Botão para paciente
+                                <ButtonTitle onPress={InsertMedicalRecord}>Inserir Prontuário</ButtonTitle> 
                             )}
                         </ButtonModal>
                     )}

@@ -1,27 +1,33 @@
 import { StatusBar } from "expo-status-bar";
-import { Container, ScrollViewContainer } from "../../components/Container/Style";
+import { CardContainer, Container } from "../../components/Container/Style";
 import { ButtonTitle, TitleScreen } from "../../components/Title/Style";
-import { ScrollView } from "react-native";
-import { SelectDoctorCard } from "../../components/SelectDoctorCard/Style";
+import { SelectDoctorCard } from "../../components/SelectDoctorCard/SelectDoctorCard";
 import { Button } from "../../components/Button/Style";
 import { LinkAction } from "../../components/Links/Style";
 import { useEffect, useState } from "react";
 import { api, doctorResource } from "../../service/service";
 import { ListComponent, ListItemContainer } from "../../components/List/List";
 
-
-export const SelectDoctor = () => {
+export const SelectDoctor = ({ navigation }) => {
     const [doctorList, setDoctorList] = useState([]);
+    const [selectedDoctor, setSelectedDoctor] = useState(null);
 
     async function ListDoctor() {
-        await api.get(doctorResource)
-            .then(response => {
-                setDoctorList(response.data)
-                console.log(response.data);
-            }).catch(error => {
-                console.log(error);
-            })
+        try {
+            const response = await api.get(doctorResource);
+            setDoctorList(response.data);
+        } catch (error) {
+            console.log(error);
+        }
     }
+
+    async function Return() {
+        navigation.replace("SelectClinic");
+    }
+
+    const handleDoctorSelect = (doctorId) => {
+        setSelectedDoctor(doctorId);
+    };
 
     useEffect(() => {
         ListDoctor();
@@ -31,23 +37,22 @@ export const SelectDoctor = () => {
         <Container>
             <StatusBar translucent backgroundColor="transparent" />
             <TitleScreen>Selecionar médico</TitleScreen>
-            <ScrollViewContainer widht={"100%"}>
-                <ScrollView style={{ width: "100%" }} showsVerticalScrollIndicator={false} overScrollMode="never">
-                    <ListComponent
-                        data={doctorList}
-                        keyExtractor={(item) => item.id}
-                        renderItem={({ item }) => (
-                            <ListItemContainer>
-                                <SelectDoctorCard name={item.idNavigation.nome} specialty={item.especialidade.especialidade1} />
-                            </ListItemContainer>
-                        )}
-                    />
-                    <Button>
-                        <ButtonTitle>Continuar</ButtonTitle>
-                    </Button>
-                    <LinkAction>Cancelar</LinkAction>
-                </ScrollView>
-            </ScrollViewContainer>
+            <ListComponent
+                data={doctorList}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => (
+                    <ListItemContainer>
+                        <CardContainer>
+                            <SelectDoctorCard name={item.idNavigation.nome} specialty={item.especialidade.especialidade1} selected={selectedDoctor === item.id} // Define se o médico está selecionado com base no estado
+                                onPress={() => handleDoctorSelect(item.id)} />
+                        </CardContainer>
+                    </ListItemContainer>
+                )}
+            />
+            <Button width={"90%"}>
+                <ButtonTitle>Continuar</ButtonTitle>
+            </Button>
+            <LinkAction onPress={Return}>Voltar</LinkAction>
         </Container>
     );
 };

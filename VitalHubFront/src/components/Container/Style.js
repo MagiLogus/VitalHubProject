@@ -6,6 +6,13 @@ align-items: center;
 background-color: #FAFAFA;
 `
 
+export const TextAlertContainer = styled.SafeAreaView`
+width: 90%;
+margin-top: 20px;
+align-items: center;
+justify-content: center;
+`
+
 export const ContentSubtitle = styled.View`
 width: 90%;
 align-self: center;
@@ -24,17 +31,14 @@ margin-top: 20px;
 
 export const ImageContainer = styled.Image`
 width: 100%;
-height: 40%;
-background-size: cover;
+height: 280px;
 `
 
 export const ImageDoctor = styled.Image`
 width: 77px;
 height: 80px;
 border-radius: 5px;
-background-image: cover;
 margin-left: 10px;
-
 `
 
 export const TextBoxContainer = styled.View`
@@ -152,7 +156,7 @@ flex: 1;
 width: 100%;
 border-radius: 10px 10px 0px 0px;
 background: #fff;
-elevation: 4; 
+elevation: 5; 
 shadow-color: rgba(0, 0, 0, 0.1);
 shadow-offset: 0px -4px;
 shadow-opacity: 1;
@@ -170,24 +174,20 @@ export const CardContainer = styled.View`
 width: 100%;
 justify-content: center;
 align-items: center;
-gap: 12px;
-margin-top: 35px;
-padding: 10px;
+padding-bottom: 12px;
 `
 
-export const DoctorCard = styled.View`
-width: 100%;
-height: 102px;
-border-radius: 5px;
-background: #FFF;
-elevation: 4;
-shadow-color: #000;
-shadow-offset: 4px 4px;
-shadow-opacity: 0.15;
-shadow-radius: 15px;
-flex-direction: row;
-align-items: center;
-`
+export const DoctorCard = styled.TouchableOpacity`
+  width: 90%;
+  height: 102px;
+  border-radius: 5px;
+  elevation: 5;
+  background: #FFF;
+  flex-direction: row;
+  align-items: center;
+  border-width: 2px; 
+  border-color: ${(props) => (props.selected ? "#496BBA" : "transparent")}; 
+`;
 
 export const TextContainer = styled.View`
 height: 100%;
@@ -196,39 +196,42 @@ margin-left: 10px;
 
 export const ClockCard = styled.View`
     flex-direction: row;
-    padding: 4px 23px;
+    padding: 6px 14px;
     gap: 6px ;
     border-radius: 5px ;
-    background-color: ${(props) => props.situacao == "agendadas" ? "#E8FCFD" : "#F1F0F5"} ;
+    background-color: #E8FCFD ;
+    margin-right: 18px;
+    align-items: center;
+    justify-content: center;
 `
 
-export const ContainerCardsList = styled.View`
-    width: 100% ;
-    margin-bottom:12px ;
-    padding: 10px 10px;
-    border-radius: 5px ;
-    flex-direction: row ;
-    background-color:#fff ;
-    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.08);
-    gap: 10px ;
+export const ContainerCardsList = styled.TouchableOpacity`
+  width: 90%;
+  height: 84px;
+  border-radius: 5px;
+  elevation: 5;
+  background: #FFF;
+  flex-direction: column;
+  align-items: center;
+  border-width: 2px; 
+  border-color: ${(props) => (props.selected ? "#496BBA" : "transparent")}; 
 `
-
 
 export const ContainerCardsListCard = styled(ContainerCardsList)`
-    width: 90%;
-    flex-direction: column;
-    padding: 18px 18px 10px 18px;
+    
 `
 export const ContentSelectClinic = styled.View`
     width: 100%;
     justify-content: space-between;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 10px;
 `
 export const IconContent = styled.View`
     width: 42px;
     height: 20px;
     flex-direction: row;
     gap: 2px;
+    justify-content: center;
+    align-items: center;
+    margin-right: 18px;
 `

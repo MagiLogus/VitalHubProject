@@ -34,7 +34,7 @@ export const AppointmentCard = ({
   const [modalVisible, setModalVisible] = useState(false);
 
   async function navigateBasedOnProfile() {
-    if (profile === 'Médico') {
+    if (profile === 'Medico') {
       await navigation.replace("ViewPrescription");
     } else {
       await navigation.replace("ConfirmMedicalRecord");
@@ -50,7 +50,7 @@ export const AppointmentCard = ({
           <ProfileData>
             <TextAge>{age} Ano(s)</TextAge>
             <Dot />
-            <TextBold>{level}</TextBold>
+            <TextBold>{level === 0 ? 'Rotina' : level === 1 ? 'Exame' : 'Urgência'}</TextBold>
           </ProfileData>
           <ViewRow>
             <ClockCard situacao={situacao}>
