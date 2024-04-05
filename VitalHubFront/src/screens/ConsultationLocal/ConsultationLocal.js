@@ -4,11 +4,34 @@ import { Marker } from 'react-native-maps';
 import { AgeTitle, TextBoxText, TextBoxTitle, Title } from "../../components/Title/Style";
 import { LinkAction } from "../../components/Links/Style";
 import { StatusBar } from "expo-status-bar";
+import { useEffect, useState } from "react";
+import { api } from "../../service/service";
 
-export const ConsultationLocal = ({ navigation }) => {
+export const ConsultationLocal = ({ navigation, route }) => {
+  const { clinicId } = route.params;
+  const [clinicLocation, setClinicLocation] = useState([]);
+
+  useEffect(() => {
+    if (clinicId) {
+      searchClinic();
+    }
+  }, [clinicId]);
+
+  async function searchClinic() {
+    try {
+      const response = await api.get(`/Clinica/BuscarPorId?id=${clinicId}`);
+      setClinicLocation(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async function Main() {
     navigation.replace("Main");
+  }
+
+  if (clinicLocation.length === 0) {
+    return null;
   }
 
   return (
@@ -16,38 +39,36 @@ export const ConsultationLocal = ({ navigation }) => {
       <StatusBar translucent backgroundColor="transparent" />
       <Map
         initialRegion={{
-          latitude: -23.6152959,
-          longitude: -46.5708332,
+          latitude: clinicLocation.endereco?.latitude,
+          longitude: clinicLocation.endereco?.longitude,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
       >
         <Marker
           coordinate={{
-            latitude: -23.6152959,
-            longitude: -46.5708332,
+            latitude: clinicLocation.endereco?.latitude,
+            longitude: clinicLocation.endereco?.longitude,
           }}
-          title="Niteroi, 180"
-          description="São Caetano do Sul, São Paulo"
         />
       </Map>
       <MapInformation>
         <MapInformationContainer>
-          <Title>Clínica Natureh</Title>
+          <Title>{clinicLocation.nomeFantasia}</Title>
           <AgeContainer>
             <AgeTitle>São Paulo, SP</AgeTitle>
           </AgeContainer>
           <TextBoxContainer>
             <TextBoxTitle>Endereço:</TextBoxTitle>
             <TextBoxArea>
-              <TextBoxText>Rua Vicenso Silva, 987</TextBoxText>
+              <TextBoxText>{clinicLocation.endereco?.logradouro}</TextBoxText>
             </TextBoxArea>
           </TextBoxContainer>
           <TextBoxContainerRow>
             <TextBoxContainer fieldWidth={45}>
               <TextBoxTitle>Número:</TextBoxTitle>
               <TextBoxArea >
-                <TextBoxText>578</TextBoxText>
+                <TextBoxText>{clinicLocation.endereco?.numero.toString()}</TextBoxText>
               </TextBoxArea>
             </TextBoxContainer>
             <TextBoxContainer fieldWidth={45}>
@@ -63,4 +84,3 @@ export const ConsultationLocal = ({ navigation }) => {
     </Container>
   );
 };
-

@@ -26,7 +26,7 @@ export const Header = ({ imageSource, profile, onPress }) => {
                     <ImageTopBar src={imageSource} />
                     <TopBarImageContainer>
                         <Subtitle>Bem-vindo !</Subtitle>
-                        <TitleTopBar>{profile === "Médico" ? "Dr(a). " : ""}{user.name}</TitleTopBar>
+                        <TitleTopBar>{user.role === "Medico" ? "Dr(a). " : ""}{user.name}</TitleTopBar>
                     </TopBarImageContainer>
                 </TopBarTitleContainer>
                 <AlertIcon />

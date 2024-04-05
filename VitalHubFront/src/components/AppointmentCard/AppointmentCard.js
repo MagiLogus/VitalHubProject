@@ -29,7 +29,8 @@ export const AppointmentCard = ({
   profile,
   speciality,
   crm,
-  navigation
+  navigation,
+  clinicId
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -46,9 +47,13 @@ export const AppointmentCard = ({
       <ContainerCardsList onPress={() => setModalVisible(true)}>
         <ProfileImage src={imageSource} />
         <ContentCard>
-          <ProfileName>{name}</ProfileName>
+          <ProfileName>{profile === "Medico" ? "Dr(a). " : ""}{name}</ProfileName>
           <ProfileData>
-            <TextAge>{age} Ano(s)</TextAge>
+            {profile === 'Pacientes' ? (
+              <TextAge>{age} Ano(s)</TextAge>
+            ) : (
+              <TextAge>CRM-{crm}</TextAge>
+            )}
             <Dot />
             <TextBold>{level === 0 ? 'Rotina' : level === 1 ? 'Exame' : 'Urgência'}</TextBold>
           </ProfileData>
@@ -86,6 +91,7 @@ export const AppointmentCard = ({
         imageSource={imageSource}
         name={name}
         navigation={navigation}
+        clinicId={clinicId}
         age={age}
         email={email}
         profile={profile}

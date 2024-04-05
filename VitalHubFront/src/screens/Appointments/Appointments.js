@@ -53,7 +53,7 @@ export const Appointments = ({ navigation }) => {
 
     async function ListarConsultas() {
         const url = (user.role == 'Medico' ? 'Medico' : 'Pacientes')
-        console.log(profile.id);
+        console.log(url);
         await api.get(`/${url}/BuscarPorData?data=${dateAppointment}&id=${profile.id}`)
             .then(response => {
                 console.log(response.data);
@@ -66,6 +66,8 @@ export const Appointments = ({ navigation }) => {
     useEffect(() => {
         ListarConsultas();
     }, [dateAppointment])
+
+
 
     return (
         <Container>
@@ -85,15 +87,16 @@ export const Appointments = ({ navigation }) => {
                         <ListItemContainer>
                             <AppointmentCard
                                 navigation={navigation}
-                                name={item.paciente.idNavigation.nome || item.medico.idnavigation.nome}
-                                age={differenceInYears(new Date(), new Date(item.paciente.dataNascimento))}
-                                profile={item.profile}
+                                name={item.medicoClinica.medico.idNavigation.nome}
+                                age={differenceInYears(new Date(), new Date())}
+                                profile={item.medicoClinica.medico.idNavigation.tipoUsuario.tipoUsuario}
                                 level={item.prioridade.prioridade}
-                                crm={item.crm}
+                                crm={item.medicoClinica.medico.crm}
                                 imageSource={item.source}
                                 situacao={item.situacao.situacao}
                                 speciality={item.speciality}
                                 email={item.email}
+                                clinicId={item.medicoClinica.clinicaId}
                                 onPressCancel={() => setShowModalCancel(true)}
                             />
                         </ListItemContainer>
