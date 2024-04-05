@@ -74,7 +74,6 @@ export const Appointments = ({ navigation }) => {
 
     return (
         <Container>
-            {/* <StatusBar translucent backgroundColor="transparent" /> */}
             <Header imageSource={("https://avatars.githubusercontent.com/u/125275514?v=4")} profile={profile} onPress={UserProfile} />
             <CalendarList setDateAppointment={setDateAppointment} />
             <FilterAppointment>

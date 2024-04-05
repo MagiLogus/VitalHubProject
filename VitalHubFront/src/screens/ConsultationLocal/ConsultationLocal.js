@@ -28,7 +28,7 @@ export const ConsultationLocal = ({ navigation, route }) => {
   }
 
   useEffect(() => {
-    console.log("Dados da clínica:", clinicLocation);
+   console.log("Dados da clínica:", clinicLocation);
   }, [clinicLocation]);
 
   async function Main() {
@@ -40,8 +40,8 @@ export const ConsultationLocal = ({ navigation, route }) => {
       <StatusBar translucent backgroundColor="transparent" />
       <Map
         initialRegion={{
-          latitude: -23.6152959,
-          longitude: -46.5708332,
+          latitude: clinicLocation.endereco?.latitude,
+          longitude: clinicLocation.endereco?.longitude,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
@@ -49,12 +49,9 @@ export const ConsultationLocal = ({ navigation, route }) => {
         
         <Marker
           coordinate={{
-            latitude: -23.6152959,
-            longitude: -46.5708332,
-        
+            latitude: clinicLocation.endereco?.latitude,
+            longitude: clinicLocation.endereco?.longitude,
           }}
-          title="Niteroi, 180"
-          description="São Caetano do Sul, São Paulo"
         />
       </Map>
       <MapInformation>

@@ -31,7 +31,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-       <StatusBar/>
+        <StatusBar/>
       <Stack.Navigator >
         <Stack.Screen name='Login' component={Login} options={{ title: 'Login', headerShown: false }} />
         <Stack.Screen name='PasswordRecover' component={PasswordRecover} options={{ title: 'Recuperar Senha', headerShown: false }} />

@@ -49,14 +49,27 @@ export const UserProfile = ({ navigation }) => {
         navigation.replace("Login");
     }
 
+    useEffect(() => {
+        console.log("Dados do Usuario:", profile);
+    }, [profile]);
+
+
     return (
         <Container>
             <StatusBar translucent backgroundColor="transparent" />
             <ImageContainer source={require("../../assets/images/user_profile.png")} />
             <ScrollViewContainer>
                 <ScrollView style={{ width: "100%" }} showsVerticalScrollIndicator={false} overScrollMode="never">
-                    <Title>{profile && profile.idNavigation ? profile.idNavigation.nome : ""}</Title>
+                    {/* <Title>{profile && profile.idNavigation ? profile.idNavigation.nome : ""}</Title> */}
+                    <Title>{profile && profile.idNavigation && profile.idNavigation.nome ? profile.idNavigation.nome.split(' ')[0] : ""}</Title>  
+                     {/* Divide o nome completo em partes usando o espaço como separador e acessa apenas a primeira parte (o primeiro nome)  */}
                     <EmailTitle>{profile && profile.idNavigation ? profile.idNavigation.email : ""}</EmailTitle>
+                    <TextBoxContainer>
+                        <TextBoxTitle>Nome Completo:</TextBoxTitle>
+                        <TextBoxArea>
+                            <TextBoxText>{profile && profile.idNavigation ? profile.idNavigation.nome : ""}</TextBoxText>
+                        </TextBoxArea>
+                    </TextBoxContainer>
                     <TextBoxContainer>
                         <TextBoxTitle>Data de Nascimento:</TextBoxTitle>
                         <TextBoxArea>
@@ -70,16 +83,32 @@ export const UserProfile = ({ navigation }) => {
                         </TextBoxArea>
                     </TextBoxContainer>
                     <TextBoxContainer>
-                        <TextBoxTitle>Endereço:</TextBoxTitle>
+                        <TextBoxTitle>RG:</TextBoxTitle>
                         <TextBoxArea>
-                            <TextBoxText>{profile.endereco ? `${profile.endereco.logradouro}, ${profile.endereco.numero}` : ""}</TextBoxText>
+                            <TextBoxText>
+                                {profile && profile.rg ? profile.rg.replace(/(\d{2})(\d{3})(\d{3})(\d{1})/, "$1.$2.$3-$4") : ""}
+                            </TextBoxText>
                         </TextBoxArea>
                     </TextBoxContainer>
+                    <TextBoxContainerRow>
+                        <TextBoxContainer fieldWidth={55}>
+                            <TextBoxTitle>Endereço:</TextBoxTitle>
+                            <TextBoxArea>
+                                <TextBoxText>{profile.endereco ? profile.endereco.logradouro : ""}</TextBoxText>
+                            </TextBoxArea>
+                        </TextBoxContainer>
+                        <TextBoxContainer fieldWidth={40}>
+                            <TextBoxTitle>Número:</TextBoxTitle>
+                            <TextBoxArea>
+                                <TextBoxText>{profile.endereco ? profile.endereco.numero : ""}</TextBoxText>
+                            </TextBoxArea>
+                        </TextBoxContainer>
+                    </TextBoxContainerRow>
                     <TextBoxContainerRow>
                         <TextBoxContainer fieldWidth={45}>
                             <TextBoxTitle>Cep:</TextBoxTitle>
                             <TextBoxArea >
-                                <TextBoxText>{profile.endereco ? profile.endereco.cep : ""}</TextBoxText>
+                                <TextBoxText>{profile.endereco && profile.endereco.cep ? profile.endereco.cep.replace(/^(\d{5})(\d{3})$/, "$1-$2") : ""}</TextBoxText>
                             </TextBoxArea>
                         </TextBoxContainer>
                         <TextBoxContainer fieldWidth={45}>

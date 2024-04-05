@@ -10,7 +10,7 @@ export const locationResource = "/Clinica/BuscarPorId";
 
 
 const portApi = "4466";
-const ip = "192.168.0.231";
+const ip = "192.168.21.113";
 const apiUrlLocal = `http://${ip}:${portApi}/api`;
 
 export const api = axios.create({
