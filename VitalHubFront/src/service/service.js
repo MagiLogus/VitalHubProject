@@ -5,6 +5,7 @@ export const profileResource = "/Pacientes/BuscarPorID";
 export const doctorResource = "/Medicos";
 export const clinicListResource = "/Clinica/ListarTodas";
 export const patientResource = "/Clinica/ListarTodas";
+export const CreateAccountResource = "/Pacientes";
 
 const portApi = "4466";
 const ip = "172.16.39.122";

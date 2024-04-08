@@ -17,7 +17,6 @@ import { SelectClinic } from './src/screens/SelectClinic/SelectClinic';
 import { Main } from './src/screens/Main/Main';
 import { InsertMedicalRecord } from './src/screens/InsertMedicalRecord/InsertMedicalRecord';
 
-
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -31,20 +30,20 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator >
-        <Stack.Screen name='Login' component={Login} options={{ title: 'Login', headerShown: false }} />
-        <Stack.Screen name='PasswordRecover' component={PasswordRecover} options={{ title: 'Recuperar Senha', headerShown: false }} />
-        <Stack.Screen name='PasswordReset' component={PasswordReset} options={{ title: 'Redefinir Senha', headerShown: false }} />
-        <Stack.Screen name='CreateAccount' component={CreateAccount} options={{ title: 'Criar Conta', headerShown: false }} />
-        <Stack.Screen name='EmailVerification' component={EmailVerification} options={{ title: 'Verificar E-mail', headerShown: false }} />
-        <Stack.Screen name='UserProfile' component={UserProfile} options={{ title: 'Perfil', headerShown: false }} />
-        <Stack.Screen name='ConfirmMedicalRecord' component={ConfirmMedicalRecord} options={{ title: 'Medico - Inserçáo Prontuário', headerShown: false }} />
-        <Stack.Screen name='Appointments' component={Appointments} options={{ title: 'Paciente - Consultas', headerShown: false }} />
-        <Stack.Screen name='ViewPrescription' component={ViewPrescription} options={{ title: 'Medico - Visualiar Prescrição', headerShown: false }} />
-        <Stack.Screen name='ConsultationLocal' component={ConsultationLocal} options={{ title: 'Medico - Local da Consulta', headerShown: false }} />
-        <Stack.Screen name='SelectDoctor' component={SelectDoctor} options={{ title: 'Selecionar Médico', headerShown: false }} />
-        <Stack.Screen name='SelectClinic' component={SelectClinic} options={{ title: 'Selecionar Clínica', headerShown: false }} />
-        <Stack.Screen name='InsertMedicalRecord' component={InsertMedicalRecord} options={{ title: 'Inserção Prontuário', headerShown: false }} />
-        <Stack.Screen name="Main" component={Main} options={{ title: 'Main', headerShown: false }} />
+        <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
+        <Stack.Screen name='PasswordRecover' component={PasswordRecover} options={{ headerShown: false }} />
+        <Stack.Screen name='PasswordReset' component={PasswordReset} options={{ headerShown: false }} />
+        <Stack.Screen name='CreateAccount' component={CreateAccount} options={{ headerShown: false }} />
+        <Stack.Screen name='EmailVerification' component={EmailVerification} options={{ headerShown: false }} />
+        <Stack.Screen name='UserProfile' component={UserProfile} options={{ headerShown: false }} />
+        <Stack.Screen name='ConfirmMedicalRecord' component={ConfirmMedicalRecord} options={{ headerShown: false }} />
+        <Stack.Screen name='Appointments' component={Appointments} options={{ headerShown: false }} />
+        <Stack.Screen name='ViewPrescription' component={ViewPrescription} options={{ headerShown: false }} />
+        <Stack.Screen name='ConsultationLocal' component={ConsultationLocal} options={{ headerShown: false }} />
+        <Stack.Screen name='SelectDoctor' component={SelectDoctor} options={{ headerShown: false }} />
+        <Stack.Screen name='SelectClinic' component={SelectClinic} options={{ headerShown: false }} />
+        <Stack.Screen name='InsertMedicalRecord' component={InsertMedicalRecord} options={{ headerShown: false }} />
+        <Stack.Screen name="Main" component={Main} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
