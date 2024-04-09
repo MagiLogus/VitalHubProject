@@ -49,10 +49,12 @@ export const Appointments = ({ navigation }) => {
 
     useEffect(() => {
         console.log(dateAppointment);
+        console.log(profile.id);
+        console.log(user.role);
     }, [dateAppointment]);
 
     async function ListarConsultas() {
-        const url = (user.role == 'Medico' ? 'Medico' : 'Pacientes')
+        const url = (user == 'Medico' ? 'Medicos' : 'Pacientes')
         console.log(url);
         await api.get(`/${url}/BuscarPorData?data=${dateAppointment}&id=${profile.id}`)
             .then(response => {

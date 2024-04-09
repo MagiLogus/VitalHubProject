@@ -17,3 +17,6 @@ font-size: 16px;
 font-family: "Quicksand_500Medium";
 color: red;
 `
+export const TextSucess = styled(TextAlert)`
+color: green;
+`

@@ -13,8 +13,8 @@ import { ActivityIndicator } from 'react-native';
 
 
 export const Login = ({ navigation }) => {
-    const [email, setEmail] = useState('paulo@email.com');
-    const [senha, setSenha] = useState('123456');
+    const [email, setEmail] = useState('lucas.portal@gmail.com');
+    const [senha, setSenha] = useState('medico123');
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -32,6 +32,7 @@ export const Login = ({ navigation }) => {
             setLoading(false);
 
             navigation.replace("Main");
+            console.log(response.data);
         } catch (error) {
             setLoading(true);
             setErrorMessage("Erro ao fazer login. Por favor, verifique suas credenciais e tente novamente.");
@@ -66,19 +67,17 @@ export const Login = ({ navigation }) => {
             <Input placeholder="Usuário ou E-mail"
                 value={email}
                 onChangeText={(txt) => setEmail(txt)}
-
             />
             <Input placeholder="Senha" secureTextEntry
                 value={senha}
                 onChangeText={(txt) => setSenha(txt)}
-
             />
             <LinkMedium onPress={() => PasswordRecover()}>Esqueceu sua senha?</LinkMedium>
             <Button width="90%" onPress={() => { Login() }}>
                 {loading && <ActivityIndicator size="small" color="#fff" />}
                 <ButtonTitle>Entrar</ButtonTitle>
             </Button>
-            <ErrorMessage message={errorMessage} />
+            {errorMessage && <ErrorMessage message={errorMessage} />}
             <ContentAccount>
                 <TextAccount>Não tem conta? <LinkBold onPress={() => CreateAccount()}>Crie uma conta agora!</LinkBold></TextAccount>
             </ContentAccount>

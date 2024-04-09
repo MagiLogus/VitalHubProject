@@ -108,8 +108,8 @@ namespace WebAPI.Repositories
                  .Include(x => x.Paciente!.IdNavigation)
                  .Include(x => x.Paciente!.IdNavigation.TipoUsuario)
                  //.Include(x => x.MedicoClinica!.Medico!.IdNavigation)
-                 .Where(x => x.MedicoClinicaId == idMedico && EF.Functions.DateDiffDay(x.DataConsulta, dataConsulta) == 0)
+                 .Where(x => x.MedicoClinica!.Medico!.IdNavigation.Id == idMedico && EF.Functions.DateDiffDay(x.DataConsulta, dataConsulta) == 0)
                  .ToList();
         }
     }
-}
+
