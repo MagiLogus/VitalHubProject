@@ -11,12 +11,13 @@ public partial class Usuario
 
     public string? Nome { get; set; }
 
-
     public string? Email { get; set; }
 
     public string? Senha { get; set; }
 
     public string? Foto { get; set; }
+
+    public int? CodRecupSenha { get; set; }
 
     public virtual Medico? Medico { get; set; }
 
