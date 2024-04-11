@@ -36,7 +36,7 @@ public partial class VitalContext : DbContext
 
     public virtual DbSet<Receita> Receitas { get; set; }
 
-    public virtual DbSet<Situaco> Situacoes { get; set; }
+    public virtual DbSet<SituacaoConsulta> Situacoes { get; set; }
 
     public virtual DbSet<TiposUsuario> TiposUsuarios { get; set; }
 
@@ -246,7 +246,7 @@ public partial class VitalContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<Situaco>(entity =>
+        modelBuilder.Entity<SituacaoConsulta>(entity =>
         {
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
