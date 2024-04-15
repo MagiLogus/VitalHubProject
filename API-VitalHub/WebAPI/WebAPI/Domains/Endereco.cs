@@ -5,7 +5,7 @@ namespace WebAPI.Domains;
 
 public partial class Endereco
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; set; }
 
     public string? Cep { get; set; }
 
@@ -16,6 +16,8 @@ public partial class Endereco
     public decimal? Longitude { get; set; }
 
     public decimal? Latitude { get; set; }
+
+    public string? Cidade { get; set; }
 
     public virtual ICollection<Clinica> Clinicas { get; set; } = new List<Clinica>();
 

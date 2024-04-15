@@ -22,6 +22,9 @@ export const ConsultationLocal = ({ navigation, route }) => {
       const response = await api.get(`/Clinica/BuscarPorId?id=${clinicId}`);
       setClinicLocation(response.data);
       console.log("Resposta da API:", response.data);
+      console.log("Latitude Inicial:", response.data.endereco?.latitude);
+      console.log("Longitude Inicial:", response.data.endereco?.longitude);
+
     } catch (error) {
       console.log(error);
     }
@@ -42,8 +45,7 @@ export const ConsultationLocal = ({ navigation, route }) => {
         initialRegion={{
           latitude: clinicLocation.endereco?.latitude,
           longitude: clinicLocation.endereco?.longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+          
         }}
       >
         
