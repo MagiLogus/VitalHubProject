@@ -1,4 +1,6 @@
-﻿using WebAPI.Domains;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
+using WebAPI.Domains;
 
 namespace WebAPI.ViewModels
 {
@@ -28,7 +30,8 @@ namespace WebAPI.ViewModels
 
         public string? Foto { get; set; }
 
-
-
+        [JsonIgnore]
+        [NotMapped]
+        public IFormFile? Arquivo { get; set; } 
     }
 }
