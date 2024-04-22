@@ -16,7 +16,6 @@ namespace WebAPI.Controllers
     public class PacientesController : ControllerBase
     {
         private IPacienteRepository pacienteRepository { get; set; }
-
         private readonly EmailSendingService _emailSendingService;
 
         public PacientesController(EmailSendingService emailSendingService)
@@ -53,14 +52,17 @@ namespace WebAPI.Controllers
         {
             try
             {
+
                 Usuario user = new Usuario();
 
                 user.Nome = pacienteModel.Nome;
                 user.Email = pacienteModel.Email;
                 user.TipoUsuarioId = pacienteModel.IdTipoUsuario;
-                var connectingString = "";
                 var containerName = "blobvitalhubcontainer";
-                user.Foto = await AzureBlobStorageHelper.UploadImageBlobAsync(pacienteModel.Arquivo, connectingString, containerName);
+                var connectionString = "";
+
+
+                user.Foto = await AzureBlobStorageHelper.UploadImageBlobAsync(pacienteModel.Arquivo, connectionString, containerName);
                 user.Senha = pacienteModel.Senha;
 
                 user.Paciente = new Paciente();
@@ -69,9 +71,10 @@ namespace WebAPI.Controllers
                 user.Paciente.Cpf = pacienteModel.Cpf;
 
                 user.Paciente.Endereco = new Endereco();
-
                 user.Paciente.Endereco.Logradouro = pacienteModel.Logradouro;
                 user.Paciente.Endereco.Numero = pacienteModel.Numero;
+                user.Paciente.Endereco.Cep = pacienteModel.Cep;
+                user.Paciente.Endereco.Cep = pacienteModel.Cep;
                 user.Paciente.Endereco.Cep = pacienteModel.Cep;
                 //user.Paciente.Endereco.Cidade = pacienteModel.Cidade;
 
@@ -81,13 +84,11 @@ namespace WebAPI.Controllers
 
                 return Ok(user);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                // Retorno de uma resposta de erro genérica
                 return BadRequest(ex.Message);
             }
         }
-
 
         [HttpGet("BuscarPorData")]
         public IActionResult GetByDate(DateTime data, Guid id)

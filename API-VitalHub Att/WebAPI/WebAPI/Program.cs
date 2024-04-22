@@ -1,8 +1,13 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using System.Reflection;
+using WebAPI.Contexts;
+using WebAPI.Interfaces;
+using WebAPI.Repositories;
 using WebAPI.Utils.Mail;
+using WebAPI.Utils.OCR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -100,6 +105,9 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+builder.Services.AddDbContext<VitalContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlDataBase")));
+
 // Configure EmailSettings
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection(nameof(EmailSettings)));
 
@@ -107,6 +115,10 @@ builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection(nameo
 builder.Services.AddTransient<IEmailService, EmailService>();
 
 builder.Services.AddScoped<EmailSendingService>();
+
+builder.Services.AddScoped<OcrService>();
+
+builder.Services.AddScoped<IExameRepository, ExameRepository>();
 
 // CORS
 builder.Services.AddCors(options =>

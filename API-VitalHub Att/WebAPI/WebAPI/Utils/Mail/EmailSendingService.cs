@@ -1,4 +1,6 @@
-﻿namespace WebAPI.Utils.Mail
+﻿using System.Security.Cryptography.X509Certificates;
+
+namespace WebAPI.Utils.Mail
 {
     public class EmailSendingService
     {
@@ -8,35 +10,34 @@
             emailService = service;
         }
 
-        //            EMAIL DE BOAS VINDAS
-
-        public async Task SendWelcomeEmail(string email, string username)
+        public async Task SendWelcomeEmail(string email, string userName)
         {
             try
             {
                 MailRequest request = new MailRequest
                 {
                     ToEmail = email,
-                    Subject = "Bem vindo ao VitalHub!",
-                    Body = GetHtmlContent(username)
+                    Subject = "Email de boas vindas",
+                    Body = GetHtmlContent(userName)
                 };
 
                 await emailService.SendEmailAsync(request);
+
             }
-            catch (Exception)
+            catch (Exception) 
             {
                 throw;
             }
         }
 
-        private string GetHtmlContent(string username)
+        private string GetHtmlContent(string userName)
         {
             string Response = @"
 <div style=""width:100%; background-color:rgba(96, 191, 197, 1); padding: 20px;"">
     <div style=""max-width: 600px; margin: 0 auto; background-color:#FFFFFF; border-radius: 10px; padding: 20px;"">
         <img src=""https://blobvitalhub.blob.core.windows.net/containervitalhub/logotipo.png"" alt="" Logotipo da Aplicação"" style="" display: block; margin: 0 auto; max-width: 200px;"" />
         <h1 style=""color: #333333; text-align: center;"">Bem-vindo ao VitalHub!</h1>
-        <p style=""color: #666666; text-align: center;"">Olá <strong>" + username + @"</strong>,</p>
+        <p style=""color: #666666; text-align: center;"">Olá <strong>" + userName + @"</strong>,</p>
         <p style=""color: #666666;text-align: center"">Estamos muito felizes por você ter se inscrito na plataforma VitalHub.</p>
         <p style=""color: #666666;text-align: center"">Explore todas as funcionalidades que oferecemos e encontre os melhores médicos.</p>
         <p style=""color: #666666;text-align: center"">Se tiver alguma dúvida ou precisar de assistência, nossa equipe de suporte está sempre pronta para ajudar.</p>
@@ -49,21 +50,19 @@
             return Response;
         }
 
-
-        //            EMAIL DE RECUPERAÇÃO DE SENHA
-
-        public async Task SendRecoveryEmail(string email, int codigo)
+        public async Task SendRecoveryPassword(string email, int codigo)
         {
             try
             {
                 MailRequest request = new MailRequest
                 {
                     ToEmail = email,
-                    Subject = "Recuperação de senha",
+                    Subject = "Email de boas vindas",
                     Body = GetHtmlContentRecovery(codigo)
                 };
 
-                await emailService.SendEmailAsync(request);
+                await emailService.SendEmailAsync(request); 
+
             }
             catch (Exception)
             {
@@ -84,5 +83,10 @@
 
             return Response;
         }
+
+
+
+
+
     }
 }

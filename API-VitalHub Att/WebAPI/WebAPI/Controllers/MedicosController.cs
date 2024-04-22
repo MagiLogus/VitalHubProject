@@ -47,7 +47,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(MedicoViewModel medicoModel)
+        public async Task <IActionResult> Post(MedicoViewModel medicoModel)
         {
             //fazer igual a paciente para cadastrar o medico 
             Usuario user = new Usuario();
@@ -56,6 +56,7 @@ namespace WebAPI.Controllers
             user.TipoUsuarioId = medicoModel.IdTipoUsuario;
             var containerName = "blobvitalhubcontainer";
             var connectionString = "";
+
             user.Foto = await AzureBlobStorageHelper.UploadImageBlobAsync(medicoModel.Arquivo, connectionString, containerName);
             user.Senha = medicoModel.Senha;
 
