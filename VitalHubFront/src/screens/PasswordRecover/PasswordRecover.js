@@ -4,11 +4,21 @@ import { Container, ContentSubtitle } from "../../components/Container/Style";
 import { Input } from "../../components/Input/Style";
 import { Logo } from "../../components/Logo/Style";
 import { ButtonTitle, Subtitle, Title } from "../../components/Title/Style";
+import { useState } from "react";
+import { api } from "../../service/service";
 
 export const PasswordRecover = ({ navigation }) => {
-    async function EmailVerification() {
-        navigation.replace("EmailVerification")
+    const [email, setEmail] = useState('paulo.oliveira.phgo@gmail.com');
+
+    async function SendEmail() {
+        await api.post(`/RecuperarSenha?email=${email}`)
+            .then(() => {
+                navigation.replace("EmailVerification", { email: email });
+            }).catch(error => {
+                console.log(error);
+            })
     }
+
     return (
         <Container>
             <StatusBar translucent backgroundColor="transparent" />
@@ -17,8 +27,8 @@ export const PasswordRecover = ({ navigation }) => {
             <ContentSubtitle>
                 <Subtitle>Digite abaixo seu email cadastrado que enviaremos um link para recuperação de senha</Subtitle>
             </ContentSubtitle>
-            <Input placeholder="Usuário ou E-mail" />
-            <Button width={"90%"} onPress={() => EmailVerification()}>
+            <Input placeholder="Usuário ou E-mail" value={email} onChangeText={(txt) => setEmail(txt)} />
+            <Button width={"90%"} onPress={() => SendEmail()}>
                 <ButtonTitle>Continuar</ButtonTitle>
             </Button>
         </Container>

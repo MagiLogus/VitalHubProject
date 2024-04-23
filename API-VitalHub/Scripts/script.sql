@@ -186,7 +186,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[TiposUsuario](
 	[ID] [uniqueidentifier] NOT NULL,
-	[TipoUsuario] [varchar](255) NULL,
+	[TipoUsuario] [nchar](10) NULL,
  CONSTRAINT [PK_TiposUsuario] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -278,5 +278,3 @@ REFERENCES [dbo].[TiposUsuario] ([ID])
 GO
 ALTER TABLE [dbo].[Usuarios] CHECK CONSTRAINT [FK_Usuarios_TiposUsuario]
 GO
-
-Insert into TiposUsuario values (NEWID(), 'Paciente'), (NEWID(), 'Medico')

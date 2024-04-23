@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
+using WebAPI.Domains;
 using WebAPI.Interfaces;
 using WebAPI.Repositories;
+using WebAPI.Utils.BlobStorage;
 using WebAPI.ViewModels;
 
 namespace WebAPI.Controllers
@@ -19,25 +21,64 @@ namespace WebAPI.Controllers
             usuarioRepository = new UsuarioRepository();
         }
 
-        [Authorize]
         [HttpPut("AlterarSenha")]
-        public IActionResult AlterarSenha(AlterarSenhaViewModel senhas)
+        public IActionResult UpdatePassword(string email, AlterarSenhaViewModel senha)
         {
-            Guid idUsuario = Guid.Parse(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+            try
+            {
+                usuarioRepository.AlterarSenha(email, senha.SenhaNova!);
 
-            bool correto = usuarioRepository.AlterarSenha(idUsuario, senhas.SenhaAntiga, senhas.SenhaNova);
-            if (!correto)
-                return Unauthorized("Senha incorreta");
-
-            return Ok();
+                return Ok("Senha alterada com sucesso !");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        //[Authorize]
-        [HttpGet("BuscarPorID/{id}")]
-        public IActionResult BuscarPorID(Guid id)
+        [HttpGet("BuscarPorId")]
+        public IActionResult GetById(Guid id)
         {
-            return Ok(usuarioRepository.BuscarPorId(id));
+            try
+            {
+                return Ok(usuarioRepository.BuscarPorId(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
+        [HttpPut("AlterarFotoPerfil")]
+        public async Task<IActionResult> UpdateProfileImage(Guid id, [FromForm] UsuarioViewModel form)
+        {
+            try
+            {
+
+                Usuario usuarioBuscado = usuarioRepository.BuscarPorId(id);
+
+
+                if (usuarioBuscado == null)
+                {
+                    return NotFound();
+                }
+
+
+            //chave
+
+                string fotoUrl = await AzureBlobStorageHelper.UploadImageBlobAsync(form.Arquivo!, connectionString!, containerName!);
+
+
+                usuarioBuscado.Foto = fotoUrl;
+
+                usuarioRepository.AtualizarFoto(id, fotoUrl);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

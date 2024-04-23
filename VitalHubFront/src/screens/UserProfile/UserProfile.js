@@ -6,6 +6,8 @@ import { userDecodeToken } from "../../utils/Auth";
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useEffect, useState } from "react";
 import { api, profileResource } from "../../service/service";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { ButtonCamera, ContainerImage } from "./Style";
 
 export const UserProfile = ({ navigation }) => {
     const [profile, setProfile] = useState([]);
@@ -52,7 +54,12 @@ export const UserProfile = ({ navigation }) => {
     return (
         <Container>
             <StatusBar translucent backgroundColor="transparent" />
-            <ImageContainer source={require("../../assets/images/user_profile.png")} />
+            <ContainerImage>
+                <ImageContainer source={require("../../assets/images/user_profile.png")} />
+                <ButtonCamera>
+                    <MaterialCommunityIcons name="camera-plus" size={20} color="#fbfbfb" />
+                </ButtonCamera>
+            </ContainerImage>
             <ScrollViewContainer>
                 <ScrollView style={{ width: "100%" }} showsVerticalScrollIndicator={false} overScrollMode="never">
                     <Title>{profile && profile.idNavigation ? profile.idNavigation.nome : ""}</Title>
