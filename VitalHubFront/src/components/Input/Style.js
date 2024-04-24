@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 export const Input = styled.TextInput.attrs({ placeholderTextColor: '#34898F' })`
-width: 90%;
+ width: ${({ size }) => (size ? size : '90%')};
 height: 53px;
 padding: 16px;
 margin-top: 20px;

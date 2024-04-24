@@ -54,8 +54,8 @@ namespace WebAPI.Controllers
             user.Nome = medicoModel.Nome;
             user.Email = medicoModel.Email;
             user.TipoUsuarioId = medicoModel.IdTipoUsuario;
+            var containerName = "blobstoragevitalhub";
            
-            //chave
             user.Foto = await AzureBlobStorageHelper.UploadImageBlobAsync(medicoModel.Arquivo, connectionString, containerName);
             user.Senha = medicoModel.Senha;
 
