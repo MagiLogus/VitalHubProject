@@ -90,8 +90,8 @@ export const UserProfile = ({ navigation }) => {
         const formData = new FormData();
         formData.append("Arquivo", {
             uri: capturedImageUri,
-            name: `image.${capturedImageUri.split(".")[1]}`,
-            type: `image/${capturedImageUri.split(".")[1]}`
+            name: `image.${capturedImageUri.split(".").pop()}`,
+            type: `image/${capturedImageUri.split(".").pop()}`
         }
 
         )

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using WebAPI.Domains;
 using WebAPI.Interfaces;
@@ -15,11 +16,13 @@ namespace WebAPI.Controllers
     [ApiController]
     public class PacientesController : ControllerBase
     {
+        private IUsuarioRepository usuarioRepository { get; set; }
         private IPacienteRepository pacienteRepository { get; set; }
         private readonly EmailSendingService _emailSendingService;
 
         public PacientesController(EmailSendingService emailSendingService)
         {
+            usuarioRepository = new UsuarioRepository();
             pacienteRepository = new PacienteRepository();
             _emailSendingService = emailSendingService;
         }
@@ -59,7 +62,6 @@ namespace WebAPI.Controllers
                 user.Email = pacienteModel.Email;
                 user.TipoUsuarioId = pacienteModel.IdTipoUsuario;
                 var containerName = "blobstoragevitalhub";
-                
                 user.Foto = await AzureBlobStorageHelper.UploadImageBlobAsync(pacienteModel.Arquivo, connectionString, containerName);
                 user.Senha = pacienteModel.Senha;
 
@@ -102,7 +104,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut]
-        public IActionResult UpdateProfile(Guid idUsuario, PacienteViewModel paciente)
+        public IActionResult UpdateProfile(Guid idUsuario, [FromForm] PacienteViewModel paciente)
         {
             try
             {
@@ -113,6 +115,9 @@ namespace WebAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
+
     }
 }
 

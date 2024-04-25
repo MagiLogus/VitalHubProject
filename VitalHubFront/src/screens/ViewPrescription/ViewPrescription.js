@@ -7,10 +7,48 @@ import { LinkAction, LinkActionRed } from "../../components/Links/Style";
 import { Line } from "../../components/Line/Style";
 
 export const ViewPrescription = ({ navigation }) => {
+    const [modalVisible, setModalVisible] = useState(false);
+    const [capturedImageUri, setCapturedImageUri] = useState(null);
+    const [description, setDescription] = useState("");
 
     async function Main() {
         navigation.replace("Main");
     }
+
+    const handleOpenModal = () => {
+        setModalVisible(true);
+    };
+
+    const handleCloseModal = () => {
+        setModalVisible(false);
+    };
+
+    const handleConfirm = (photo) => {
+        setCapturedImageUri(photo);
+        handleCloseModal();
+    };
+
+    async function InsertExam() {
+        const formData = new FormData();
+        formData.append("ConsultaId", prontuario.id);
+        formData.append("Imagem", {
+            uri: capturedImageUri,
+            name: `image.${capturedImageUri.split(".").pop()}`,
+            type: `image/${capturedImageUri.split(".").pop()}`
+        }
+
+        )
+        await api.put(`/Exame/Cadastrar`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        }).then(response => {
+            setDescription(description + "\n" + response.data.descricao)
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
 
     return (
         <Container>
@@ -58,7 +96,7 @@ export const ViewPrescription = ({ navigation }) => {
                     <ButtonContainer>
                         <ButtonImage width={"50%"}>
                             <CameraIcon />
-                            <ButtonTitle>Enviar</ButtonTitle>
+                            <ButtonTitle onPress={handleOpenModal}>Enviar</ButtonTitle>
                         </ButtonImage>
                         <LinkActionRed>Cancelar</LinkActionRed>
                     </ButtonContainer>
@@ -71,6 +109,12 @@ export const ViewPrescription = ({ navigation }) => {
                     </TextBoxContainer>
                     <LinkAction onPress={Main}>Voltar</LinkAction>
                 </ScrollView>
+                <ModalCamera
+                    visible={modalVisible}
+                    onClose={handleCloseModal}
+                    title="Título do Modal"
+                    onConfirm={handleConfirm}
+                />
             </ScrollViewContainer>
         </Container>
     );

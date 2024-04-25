@@ -34,6 +34,7 @@ export const Login = ({ navigation }) => {
             navigation.replace("Main");
             console.log(response.data);
         } catch (error) {
+            console.log(error);
             setLoading(true);
             setErrorMessage("Erro ao fazer login. Por favor, verifique suas credenciais e tente novamente.");
             setTimeout(() => {
