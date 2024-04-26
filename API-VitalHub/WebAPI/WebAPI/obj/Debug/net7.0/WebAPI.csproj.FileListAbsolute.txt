@@ -437,3 +437,4 @@ C:\Users\33984578865\Desktop\VitalHubProject\API-VitalHub\WebAPI\WebAPI\obj\Debu
 C:\Users\33984578865\Desktop\VitalHubProject\API-VitalHub\WebAPI\WebAPI\obj\Debug\net7.0\WebAPI.genruntimeconfig.cache
 C:\Users\33984578865\Desktop\VitalHubProject\API-VitalHub\WebAPI\WebAPI\obj\Debug\net7.0\ref\WebAPI.dll
 C:\Users\33984578865\Desktop\VitalHubProject\API-VitalHub\WebAPI\WebAPI\obj\Debug\net7.0\WebAPI.csproj.Up2Date
+C:\Users\33984578865\Desktop\VitalHubProject\API-VitalHub\WebAPI\WebAPI\obj\Debug\net7.0\WebAPI.sourcelink.json

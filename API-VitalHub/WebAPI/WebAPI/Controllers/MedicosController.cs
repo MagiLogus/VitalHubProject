@@ -14,10 +14,12 @@ namespace WebAPI.Controllers
     [ApiController]
     public class MedicosController : ControllerBase
     {
+        private IUsuarioRepository usuarioRepository { get; set; }
         private IMedicoRepository _medicoRepository;
         public MedicosController()
         {
             _medicoRepository = new MedicoRepository();
+            usuarioRepository = new UsuarioRepository();
         }
 
         [HttpGet]
@@ -55,6 +57,7 @@ namespace WebAPI.Controllers
             user.Email = medicoModel.Email;
             user.TipoUsuarioId = medicoModel.IdTipoUsuario;
             var containerName = "blobstoragevitalhub";
+
             user.Foto = await AzureBlobStorageHelper.UploadImageBlobAsync(medicoModel.Arquivo, connectionString, containerName);
             user.Senha = medicoModel.Senha;
 
@@ -100,15 +103,34 @@ namespace WebAPI.Controllers
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPut]
-        public IActionResult UpdateProfile(MedicoViewModel medico)
+        public async Task<IActionResult> UpdateProfile(Guid idUsuario,[FromForm] MedicoViewModel medico)
         {
             try
             {
-                Guid idUsuario = Guid.Parse(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+                Usuario usuarioBuscado = usuarioRepository.BuscarPorId(idUsuario);
 
-                return Ok(_medicoRepository.AtualizarPerfil(idUsuario, medico));
+
+                if (usuarioBuscado == null)
+                {
+                    return NotFound();
+                }
+
+
+                var containerName = "blobstoragevitalhub";
+
+                string fotoUrl = await AzureBlobStorageHelper.UploadImageBlobAsync(medico.Arquivo!, connectionString!, containerName!);
+
+
+                usuarioBuscado.Foto = fotoUrl;
+
+                _medicoRepository.AtualizarPerfil(idUsuario, medico);
+
+                usuarioRepository.AtualizarFoto(idUsuario, fotoUrl);
+
+                
+                return Ok();
 
             }
             catch (Exception ex)

@@ -1,4 +1,5 @@
-﻿using WebAPI.Domains;
+﻿using Microsoft.AspNetCore.Mvc;
+using WebAPI.Domains;
 using WebAPI.ViewModels;
 
 namespace WebAPI.Interfaces

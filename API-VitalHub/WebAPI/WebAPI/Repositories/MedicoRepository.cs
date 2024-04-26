@@ -24,8 +24,9 @@ namespace WebAPI.Repositories
 
                 if (medicoBuscado == null) return null!;
 
-                //if (medico.Foto != null)
-                //    medicoBuscado.IdNavigation.Foto = medico.Foto;
+                if (medico.Foto != null)
+                medicoBuscado.IdNavigation.Foto = medico.Foto;
+
 
                 if (medico.EspecialidadeId != null)
                     medicoBuscado.EspecialidadeId = medico.EspecialidadeId;
@@ -65,6 +66,7 @@ namespace WebAPI.Repositories
                      .Include(x => x.Prioridade)
                      .Include(x => x.MedicoClinica)
                      .Include(x => x.Paciente!.IdNavigation)
+         
 
                      // diferença em dias entre a Data da Consulta e a dataConsulta é igual a 0.
                      .Where(x => x.MedicoClinica!.MedicoId == idMedico && EF.Functions.DateDiffDay(x.DataConsulta, dataConsulta) == 0)
