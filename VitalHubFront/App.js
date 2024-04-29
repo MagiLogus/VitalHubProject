@@ -16,6 +16,7 @@ import { SelectDoctor } from './src/screens/SelectDoctor/SelectDoctor';
 import { SelectClinic } from './src/screens/SelectClinic/SelectClinic';
 import { Main } from './src/screens/Main/Main';
 import { InsertMedicalRecord } from './src/screens/InsertMedicalRecord/InsertMedicalRecord';
+import { SelectDate } from './src/screens/SelectDate/SelectDate';
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +44,7 @@ export default function App() {
         <Stack.Screen name='SelectDoctor' component={SelectDoctor} options={{ headerShown: false }} />
         <Stack.Screen name='SelectClinic' component={SelectClinic} options={{ headerShown: false }} />
         <Stack.Screen name='InsertMedicalRecord' component={InsertMedicalRecord} options={{ headerShown: false }} />
+        <Stack.Screen name='SelectDate' component={SelectDate} options={{ headerShown: false }} />
         <Stack.Screen name="Main" component={Main} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>

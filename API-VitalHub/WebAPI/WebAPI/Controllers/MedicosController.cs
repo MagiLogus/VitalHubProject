@@ -57,7 +57,7 @@ namespace WebAPI.Controllers
             user.Email = medicoModel.Email;
             user.TipoUsuarioId = medicoModel.IdTipoUsuario;
             var containerName = "blobstoragevitalhub";
-
+            var connectionString = "DefaultEndpointsProtocol=https;AccountName=blobstoragevitalhub;AccountKey=i1aljpnlfG+pyTua8D5XgCbTxKeOAQFqitwhl+0CgpLmT6jBDPso9ACtbfH8f/NifEkt/0bnlLpn+ASt6s4jUw==;EndpointSuffix=core.windows.net";
             user.Foto = await AzureBlobStorageHelper.UploadImageBlobAsync(medicoModel.Arquivo, connectionString, containerName);
             user.Senha = medicoModel.Senha;
 
@@ -105,7 +105,7 @@ namespace WebAPI.Controllers
 
         //[Authorize]
         [HttpPut]
-        public async Task<IActionResult> UpdateProfile(Guid idUsuario,[FromForm] MedicoViewModel medico)
+        public async Task<IActionResult> UpdateProfile(Guid idUsuario, [FromForm] MedicoViewModel medico)
         {
             try
             {
@@ -119,6 +119,7 @@ namespace WebAPI.Controllers
 
 
                 var containerName = "blobstoragevitalhub";
+                var connectionString = "DefaultEndpointsProtocol=https;AccountName=blobstoragevitalhub;AccountKey=i1aljpnlfG+pyTua8D5XgCbTxKeOAQFqitwhl+0CgpLmT6jBDPso9ACtbfH8f/NifEkt/0bnlLpn+ASt6s4jUw==;EndpointSuffix=core.windows.net";
 
                 string fotoUrl = await AzureBlobStorageHelper.UploadImageBlobAsync(medico.Arquivo!, connectionString!, containerName!);
 
@@ -129,7 +130,7 @@ namespace WebAPI.Controllers
 
                 usuarioRepository.AtualizarFoto(idUsuario, fotoUrl);
 
-                
+
                 return Ok();
 
             }

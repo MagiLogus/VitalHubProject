@@ -25,6 +25,10 @@ export const SelectDoctor = ({ navigation }) => {
         navigation.replace("SelectClinic");
     }
 
+    async function NextPage() {
+        navigation.replace("SelectDate");
+    }
+
     const handleDoctorSelect = (doctorId) => {
         setSelectedDoctor(doctorId);
     };
@@ -49,7 +53,7 @@ export const SelectDoctor = ({ navigation }) => {
                     </ListItemContainer>
                 )}
             />
-            <Button width={"90%"}>
+            <Button onPress={NextPage} width={"90%"}>
                 <ButtonTitle>Continuar</ButtonTitle>
             </Button>
             <LinkAction onPress={Return}>Voltar</LinkAction>
