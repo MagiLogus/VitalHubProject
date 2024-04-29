@@ -8,13 +8,14 @@ import { useEffect, useState } from "react";
 import { api, doctorResource } from "../../service/service";
 import { ListComponent, ListItemContainer } from "../../components/List/List";
 
-export const SelectDoctor = ({ navigation }) => {
+export const SelectDoctor = ({ navigation, route }) => {
     const [doctorList, setDoctorList] = useState([]);
     const [selectedDoctor, setSelectedDoctor] = useState(null);
+    const [doctor, setDoctor] = useState(null);
 
     async function ListDoctor() {
         try {
-            const response = await api.get(doctorResource);
+            const response = await api.get(`/Medicos/ListarPorClinica?id=${route.params.agendamento.clinicaId}`);
             setDoctorList(response.data);
         } catch (error) {
             console.log(error);
@@ -26,7 +27,12 @@ export const SelectDoctor = ({ navigation }) => {
     }
 
     async function NextPage() {
-        navigation.replace("SelectDate");
+        navigation.replace("SelectDate", {
+            agendamento: {
+                ...route.params.agendamento,
+                ...medico
+            }
+        });
     }
 
     const handleDoctorSelect = (doctorId) => {
@@ -36,6 +42,10 @@ export const SelectDoctor = ({ navigation }) => {
     useEffect(() => {
         ListDoctor();
     }, [])
+
+    useEffect(() => {
+        console.log(route);
+    }, [route])
 
     return (
         <Container>
@@ -48,7 +58,10 @@ export const SelectDoctor = ({ navigation }) => {
                     <ListItemContainer>
                         <CardContainer>
                             <SelectDoctorCard name={item.idNavigation.nome} specialty={item.especialidade.especialidade1} selected={selectedDoctor === item.id} // Define se o médico está selecionado com base no estado
-                                onPress={() => handleDoctorSelect(item.id)} />
+                                onPress={() => {
+                                    handleDoctorSelect(item.id);
+                                    setDoctor({ medicoClinicaId: medico.id, medicoLabel: medico.idNavigation.nome })
+                                }} />
                         </CardContainer>
                     </ListItemContainer>
                 )}

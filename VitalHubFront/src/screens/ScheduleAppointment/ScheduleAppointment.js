@@ -8,18 +8,20 @@ import { LinkAction } from '../../components/Links/Style'
 
 
 const types = [
-  { id: 0, tipo: 'Rotina' },
-  { id: 1, tipo: 'Exame' },
-  { id: 2, tipo: 'Urgência' }
+  { id: 'C5A9FDAD-4191-4BDD-A9B0-18D2D0FEAB55', tipo: 'Rotina' },
+  { id: '41D3CB18-6013-4E7C-9CBA-D168A306D7F7', tipo: 'Exame' },
+  { id: 'CA540D01-7E9E-47C8-A9BE-718147F9D15F', tipo: 'Urgência' }
 ]
 
 export const ScheduleAppointment = ({ navigation, visible = true, setShowModalAgendamento, ...rest }) => {
-  const [tipoConsulta, setTipoConsulta] = useState('')
+  const [tipoConsulta, setTipoConsulta] = useState('Rotina')
 
   async function handleContinue() {
     await setShowModalAgendamento(false)
-    navigation.replace("SelectClinic")
+    navigation.replace("SelectClinic", { agendamento: agendamento })
   }
+
+  const [agendamento, setAgendamento] = useState(null);
 
   return (
     <Modal {...rest} visible={visible} transparent={true} animationType='fade' animationOutTiming={0}>
@@ -33,9 +35,14 @@ export const ScheduleAppointment = ({ navigation, visible = true, setShowModalAg
             {
               types.map((item) => {
                 return (
-                  <InputCheckbox
+                  <InputCheckbox id={item.id}
                     key={item.id}
-                    onPress={e => setTipoConsulta(item.tipo)}
+                    onPress={e => {
+                      setTipoConsulta(item.tipo);
+                      setAgendamento({ ...agendamento, prioridadeId: item.id, prioridadeLabel: item.tipo });
+                      console.log(agendamento);
+                      console.log(agendamento.localizacao);
+                    }}
                     optionSelected={tipoConsulta == item.tipo ? true : false}
                   >
                     <TextInputCheckbox optionSelected={tipoConsulta == item.tipo ? true : false}>
@@ -48,7 +55,10 @@ export const ScheduleAppointment = ({ navigation, visible = true, setShowModalAg
           </ViewOption>
 
           <Label>Qual a localização desejada:</Label>
-          <Input placeholder='Informe a localização' />
+          <Input value={agendamento ? agendamento.localizacao : null} placeholder='Informe a localização' onChangeText={(txt) => setAgendamento({
+            ...agendamento,
+            localizacao: txt
+          })} />
 
           <Button width={"90%"} onPress={() => handleContinue()}>
             <ButtonTitle>Continuar</ButtonTitle>
