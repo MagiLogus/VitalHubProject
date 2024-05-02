@@ -41,7 +41,7 @@ LocaleConfig.locales['pt-br'] = {
 LocaleConfig.defaultLocale = 'pt-br';
 
 
-export const CalendarChoose = () => {
+export const CalendarChoose = ({dataSelecionada, setDataSelecionada}) => {
 
     //Data Selecionada
     const [selected, setSelected] = useState('');
@@ -65,7 +65,7 @@ export const CalendarChoose = () => {
             enableSwipeMonths
             onDayPress={day => {
                 if (isFutureDate(day.dateString)) {
-                    setSelected(day.dateString);
+                    setDataSelecionada(day.dateString);
                 } else {
                     alert('Por favor, selecione uma data futura.');
                 }
@@ -84,7 +84,7 @@ export const CalendarChoose = () => {
             }}
 
             markedDates={{
-                [selected]: { selected: true, disableTouchEvent: true }
+                [dataSelecionada]: { selected: true, disableTouchEvent: true }
             }}
             customStyles={{
                 monthText: { fontFamily: "MontserratAlternates_600SemiBold", fontSize: 20 },

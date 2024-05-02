@@ -1,5 +1,6 @@
 import { Modal } from "react-native";
 import { ButtonModalDoctor, ButtonTitleDoctor, ContainerConfirm2, ContainerConfirm3, ContainerTextConfirm, ConteinerConfirm, ContentAccount, LinkAccount, ModalContent2, TextConfirm, TextConfirm2, TextConfirm3, TextInfo } from './style';
+import moment from "moment/moment";
 
 
 
@@ -7,6 +8,7 @@ export const ConfirmModal = ({
     visible,
     navigation,
     setShowModalConfirm,
+    agendamento,
     ...rest
 }) => {
 
@@ -33,19 +35,19 @@ export const ConfirmModal = ({
                     <ContainerConfirm2>
                         <ContainerConfirm3>
                             <TextConfirm3>Data da consulta</TextConfirm3>
-                            <TextInfo>1 de Novembro de 2023</TextInfo>
+                            <TextInfo>{moment(agendamento.dataConsulta).format('DD [de] MMMM [de] YYYY [às] HH:mm')}</TextInfo>
                         </ContainerConfirm3>
                         <ContainerConfirm3>
                             <TextConfirm3>Médico(a) da consulta</TextConfirm3>
-                            <TextInfo>Dra Alessandra, Dermatologista</TextInfo>
+                            <TextInfo>{agendamento.medicoLabel}, {agendamento.medicoEsp}</TextInfo>
                         </ContainerConfirm3>
                         <ContainerConfirm3>
                             <TextConfirm3>Local da consulta</TextConfirm3>
-                            <TextInfo>São Paulo, SP</TextInfo>
+                            <TextInfo>{agendamento.clinicaCidade}, {agendamento.clinicaEstado}</TextInfo>
                         </ContainerConfirm3>
                         <ContainerConfirm3>
                             <TextConfirm3>Tipo da consulta</TextConfirm3>
-                            <TextInfo>Rotina</TextInfo>
+                            <TextInfo>{agendamento.prioridadeLabel}</TextInfo>
                         </ContainerConfirm3>
                     </ContainerConfirm2>
                     <ButtonModalDoctor onPress={Home}>

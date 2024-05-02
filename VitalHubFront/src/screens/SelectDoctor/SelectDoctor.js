@@ -15,15 +15,15 @@ export const SelectDoctor = ({ navigation, route }) => {
 
     async function ListDoctor() {
         try {
-            const response = await api.get(`/Medicos/ListarPorClinica?id=${route.params.agendamento.clinicaId}`);
+            const response = await api.get(`/Medicos/BuscarPorIdClinica?id=${route.params.agendamento.clinicaId}`);
             setDoctorList(response.data);
         } catch (error) {
             console.log(error);
         }
     }
 
-    async function Return() {
-        navigation.replace("SelectClinic");
+    async function Cancel() {
+        navigation.replace("Main");
     }
 
     async function NextPage() {
@@ -45,6 +45,7 @@ export const SelectDoctor = ({ navigation, route }) => {
 
     useEffect(() => {
         console.log(route);
+        console.log(doctor);
     }, [route])
 
     return (
@@ -57,10 +58,10 @@ export const SelectDoctor = ({ navigation, route }) => {
                 renderItem={({ item }) => (
                     <ListItemContainer>
                         <CardContainer>
-                            <SelectDoctorCard name={item.idNavigation.nome} specialty={item.especialidade.especialidade1} selected={selectedDoctor === item.id} // Define se o médico está selecionado com base no estado
+                            <SelectDoctorCard source={{ uri: item.idNavigation.foto }} name={item.idNavigation.nome} specialty={item.especialidade.especialidade1} selected={selectedDoctor === item.id}
                                 onPress={() => {
                                     handleDoctorSelect(item.id);
-                                    setDoctor({ medicoClinicaId: medico.id, medicoLabel: medico.idNavigation.nome })
+                                    setDoctor({ medicoClinicaId: item.id, medicoLabel: item.idNavigation.nome, medicoEsp: item.especialidade.especialidade1 })
                                 }} />
                         </CardContainer>
                     </ListItemContainer>
@@ -69,7 +70,7 @@ export const SelectDoctor = ({ navigation, route }) => {
             <Button onPress={NextPage} width={"90%"}>
                 <ButtonTitle>Continuar</ButtonTitle>
             </Button>
-            <LinkAction onPress={Return}>Voltar</LinkAction>
+            <LinkAction onPress={Cancel}>Cancelar</LinkAction>
         </Container>
     );
 };

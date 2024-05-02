@@ -1,20 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import RNPickerSelect from 'react-native-picker-select';
 import { ButtonMedicalRecord, ButtonTitle, Container, ContentLinkCenter, IconSelect, InputWithTitleContent, LinkBlueMontserratMargin, SelectPicker, TitleSelectClinic, TitleWithInput } from './Style';
 import { CalendarChoose } from '../../components/CalendarChoose/CalendarChoose'
 import { ConfirmModal } from '../../components/ConfirmModal/ConfirmModal';
 import { StatusBar } from 'expo-status-bar';
 
-export function SelectDate({ navigation }) {
-
+export function SelectDate({ navigation, route }) {
+    const [agendamento, setAgendamento] = useState(null);
+    const [dataSelecionada, setDataSelecionada] = useState("");
     const [selectedValueTime, setSelectedValueTime] = useState("");
     const [showModalConfirm, setShowModalConfirm] = useState(false);
 
     const generateAvailableTime = () => {
         const availableTime = [];
-        const startTime = 8 * 60; 
-        const endTime = 20 * 60; 
-        const interval = 30; 
+        const startTime = 8 * 60;
+        const endTime = 20 * 60;
+        const interval = 30;
 
         for (let i = startTime; i <= endTime; i += interval) {
             const hour = Math.floor(i / 60);
@@ -28,31 +29,40 @@ export function SelectDate({ navigation }) {
 
     const availableTime = generateAvailableTime();
 
-    async function NextPage() {
-        navigation.replace("SelectDate");
-    }
-
     async function OpenModal() {
+   
+    
+
         setShowModalConfirm(true);
+         setAgendamento({
+            ...route.params.agendamento,
+            dataConsulta: `${dataSelecionada} ${selectedValueTime}`
+        })
     }
 
     async function CloseModal() {
         setShowModalConfirm(false);
     }
 
-    async function Return() {
-        navigation.replace("SelectDoctor");
+    async function Cancel() {
+        navigation.replace("Main");
     }
+    useEffect(() => {
+        console.log(route);
+        console.log(dataSelecionada);
+        console.log(selectedValueTime);
+        console.log(agendamento);
+    }, [route, dataSelecionada])
 
     return (
         <Container>
             <StatusBar translucent backgroundColor="transparent" />
             <TitleSelectClinic>Selecionar data</TitleSelectClinic>
 
-            <CalendarChoose />
+            <CalendarChoose setDataSelecionada={setDataSelecionada} dataSelecionada={dataSelecionada} />
 
             <InputWithTitleContent style={{ width: '90%' }}>
-                <TitleWithInput>Selecione um horário disponível</TitleWithInput>
+                <TitleWithInput>Selecione um horário disponível:</TitleWithInput>
             </InputWithTitleContent>
 
             <SelectPicker style={{ width: '90%' }}>
@@ -78,15 +88,18 @@ export function SelectDate({ navigation }) {
                 <ButtonTitle>Confirmar</ButtonTitle>
             </ButtonMedicalRecord>
 
-            <ContentLinkCenter onPress={Return} style={{ width: '90%' }}>
-                <LinkBlueMontserratMargin>Voltar</LinkBlueMontserratMargin>
+            <ContentLinkCenter onPress={Cancel} style={{ width: '90%' }}>
+                <LinkBlueMontserratMargin>Cancelar</LinkBlueMontserratMargin>
             </ContentLinkCenter>
 
-            <ConfirmModal
-                visible={showModalConfirm}
-                setShowModalConfirm={CloseModal}
-                navigation={navigation}
-            />
+            {agendamento && (
+                <ConfirmModal
+                    agendamento={agendamento}
+                    visible={showModalConfirm}
+                    setShowModalConfirm={CloseModal}
+                    navigation={navigation}
+                />
+            )}
         </Container>
     );
 }

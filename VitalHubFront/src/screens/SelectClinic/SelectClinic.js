@@ -53,7 +53,7 @@ export const SelectClinic = ({ navigation, route }) => {
                         <CardContainer>
                             <SelectClinicCard title={item.nomeFantasia} numberStarYellow={4.5} local={`${item.endereco.cidade}, ${item.endereco.estado}`} date={'Seg-Sex'} selected={selectedClinic === item.id} onPress={() => {
                                 handleClinicSelect(item.id);
-                                setClinic({ clinicaId: item.id, clinicaLabel: item.nomeFantasia });
+                                setClinic({ clinicaId: item.id, clinicaLabel: item.nomeFantasia, clinicaCidade: item.endereco.cidade, clinicaEstado: item.endereco.estado });
                             }} />
                         </CardContainer>
                     </ListItemContainer>

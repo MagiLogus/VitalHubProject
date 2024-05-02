@@ -29,7 +29,7 @@ export const ScheduleAppointment = ({ navigation, visible = true, setShowModalAg
     navigation.replace("SelectClinic", { agendamento: agendamento })
   }
 
-  const [agendamento, setAgendamento] = useState(null);
+  const [agendamento, setAgendamento] = useState({ prioridadeId: 'C5A9FDAD-4191-4BDD-A9B0-18D2D0FEAB55', prioridadeLabel: 'Rotina' });
 
   return (
     <Modal {...rest} visible={visible} transparent={true} animationType='fade' animationOutTiming={0}>
