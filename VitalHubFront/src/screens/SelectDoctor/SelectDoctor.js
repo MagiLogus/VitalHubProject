@@ -30,7 +30,7 @@ export const SelectDoctor = ({ navigation, route }) => {
         navigation.replace("SelectDate", {
             agendamento: {
                 ...route.params.agendamento,
-                ...medico
+                ...doctor
             }
         });
     }

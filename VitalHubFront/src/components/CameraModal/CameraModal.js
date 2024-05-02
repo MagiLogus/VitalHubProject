@@ -19,7 +19,7 @@ const ModalCamera = ({ visible, onClose, title, onConfirm }) => {
 
     async function CapturePhoto() {
         if (cameraRef.current) {
-            const photo = await cameraRef.current.takePictureAsync();
+            const photo = await cameraRef.current.takePictureAsync({ quality: 1 });
 
             if (photo) {
                 setPhoto(photo.uri);
@@ -90,7 +90,7 @@ const ModalCamera = ({ visible, onClose, title, onConfirm }) => {
                             >
                                 <TitleButton>CONFIRMAR</TitleButton>
                             </CustomButton>
-                            
+
                         </Container>
                     </ConatinerImage>
                 </Modal>

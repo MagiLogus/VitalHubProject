@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [Authorize(Roles = "Medico")]
+        //[Authorize(Roles = "Medico")]
         [HttpGet("ConsultasMedico")]
         public IActionResult GetByIdDoctor()
         {

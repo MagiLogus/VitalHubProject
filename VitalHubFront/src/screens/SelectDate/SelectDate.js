@@ -12,9 +12,9 @@ export function SelectDate({ navigation }) {
 
     const generateAvailableTime = () => {
         const availableTime = [];
-        const startTime = 8 * 60; // Horário inicial em minutos (8:00 AM)
-        const endTime = 20 * 60; // Horário final em minutos (8:00 PM)
-        const interval = 30; // Intervalo em minutos
+        const startTime = 8 * 60; 
+        const endTime = 20 * 60; 
+        const interval = 30; 
 
         for (let i = startTime; i <= endTime; i += interval) {
             const hour = Math.floor(i / 60);
@@ -26,7 +26,6 @@ export function SelectDate({ navigation }) {
         return availableTime;
     };
 
-    // Usando a função para gerar os horários disponíveis
     const availableTime = generateAvailableTime();
 
     async function NextPage() {

@@ -17,14 +17,14 @@ export const SelectClinic = ({ navigation, route }) => {
         try {
             const response = await api.get(`/Clinica/BuscarPorCidade?cidade=${route.params.agendamento.localizacao}`);
             setClinicList(response.data);
-            console.log(clinicList);
+            console.log(response.data);
         } catch (error) {
             console.log(error);
         }
     }
 
     async function handleContinue() {
-        navigation.replace("SelectDoctor", { agendamento: { ...route.params.agendamento, ...clinica } })
+        navigation.replace("SelectDoctor", { agendamento: { ...route.params.agendamento, ...clinic } })
     }
 
     async function Return() {
@@ -51,7 +51,7 @@ export const SelectClinic = ({ navigation, route }) => {
                 renderItem={({ item }) => (
                     <ListItemContainer>
                         <CardContainer>
-                            <SelectClinicCard title={item.title} numberStarYellow={item.numberStarYellow} local={item.local} date={item.date} selected={selectedClinic === item.id} onPress={() => {
+                            <SelectClinicCard title={item.nomeFantasia} numberStarYellow={4.5} local={`${item.endereco.cidade}, ${item.endereco.estado}`} date={'Seg-Sex'} selected={selectedClinic === item.id} onPress={() => {
                                 handleClinicSelect(item.id);
                                 setClinic({ clinicaId: item.id, clinicaLabel: item.nomeFantasia });
                             }} />
