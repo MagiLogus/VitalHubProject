@@ -18,7 +18,9 @@ namespace WebAPI.ViewModels
 
         public int? Numero { get; set; }
 
-        public string? Cidade {  get; set; }    
+        public string? Cidade {  get; set; }
+
+        public string? Estado { get; set; }
 
         public string? Nome { get; set; }
 

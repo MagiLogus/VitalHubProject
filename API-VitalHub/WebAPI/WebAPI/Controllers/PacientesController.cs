@@ -75,9 +75,8 @@ namespace WebAPI.Controllers
                 user.Paciente.Endereco.Logradouro = pacienteModel.Logradouro;
                 user.Paciente.Endereco.Numero = pacienteModel.Numero;
                 user.Paciente.Endereco.Cep = pacienteModel.Cep;
-                user.Paciente.Endereco.Cep = pacienteModel.Cep;
-                user.Paciente.Endereco.Cep = pacienteModel.Cep;
-                //user.Paciente.Endereco.Cidade = pacienteModel.Cidade;
+                user.Paciente.Endereco.Cidade = pacienteModel.Cidade;
+                user.Paciente.Endereco.Estado= pacienteModel.Estado;    
 
                 pacienteRepository.Cadastrar(user);
 

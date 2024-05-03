@@ -9,15 +9,15 @@ import { api, profileResource } from "../../service/service";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ButtonCamera, ContainerImage } from "./Style";
 import ModalCamera from "../../components/CameraModal/CameraModal";
-import { EditProfile } from "../EditProfile/EditProfile";
 import { Input } from "../../components/Input/Style";
+import moment from "moment/moment";
 
 export const UserProfile = ({ navigation }) => {
     const [profile, setProfile] = useState([]);
     const [id, setId] = useState("");
     const [tokenLoad, setTokenLoad] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
-    const [capturedImageUri, setCapturedImageUri] = useState(null); // Estado para armazenar a URI da imagem capturada
+    const [capturedImageUri, setCapturedImageUri] = useState(null);
     const [editProfile, setEditProfile] = useState(false);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -26,6 +26,7 @@ export const UserProfile = ({ navigation }) => {
     const [cep, setCep] = useState("");
     const [street, setStreet] = useState("");
     const [city, setCity] = useState("");
+    const [state, setState] = useState("");
     const [number, setNumeber] = useState("");
 
     useEffect(() => {
@@ -44,8 +45,17 @@ export const UserProfile = ({ navigation }) => {
                 const response = await api.get(`${profileResource}?id=${id}`);
                 const data = response.data;
                 setProfile(data);
-            } catch {
-                console.log("error");
+                setName(data.idNavigation.nome)
+                setEmail(data.idNavigation.email)
+                setBirth(new Date(data.dataNascimento).toLocaleDateString())
+                setCep(data.endereco.cep)
+                setCpf(data.cpf)
+                setStreet(data.endereco.logradouro)
+                setCity(data.endereco.cidade)
+                setState(data.endereco.estado)
+                setNumeber(data.endereco.numero.toString())
+            } catch (error) {
+                console.log(error);
             }
         }
         ListUserProfile();
@@ -92,10 +102,19 @@ export const UserProfile = ({ navigation }) => {
             uri: capturedImageUri,
             name: `image.${capturedImageUri.split(".").pop()}`,
             type: `image/${capturedImageUri.split(".").pop()}`
-        }
+        });
 
-        )
-        await api.put(`colocar a rota aqui`, formData, {
+        formData.append("Cidade", city);
+        formData.append("Estado", state);
+        formData.append("Cep", cep);
+        formData.append("Logradouro", street);
+        formData.append("DataNascimento", moment(birth).format('YYYY-MM-DD'));
+        formData.append("Cpf", cpf);
+        formData.append("Nome", name);
+        formData.append("Numero", number);
+        formData.append("Email", email);
+
+        await api.put(`/Pacientes`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
@@ -201,31 +220,36 @@ export const UserProfile = ({ navigation }) => {
                     ) : (
                         <></>
                     )}
-                    <TextBoxContainerRow>
-                        {editProfile ? (
-                            <Input value={city}
-                                onChangeText={(txt) => setCity(txt)} size="45%" placeholder="Cidade" />
-                        ) : (
-                            <TextBoxContainer fieldWidth={45}>
-                                <TextBoxTitle>Cep:</TextBoxTitle>
-                                <TextBoxArea >
-                                    <TextBoxText>{profile.endereco ? profile.endereco.cep : ""}</TextBoxText>
-                                </TextBoxArea>
-                            </TextBoxContainer>
-                        )}
 
-                        {editProfile ? (
-                            <Input value={number}
-                                onChangeText={(txt) => setNumeber(txt)} keyboardType="numeric" size="45%" placeholder="Número" />
-                        ) : (
-                            <TextBoxContainer fieldWidth={45}>
-                                <TextBoxTitle>Cidade:</TextBoxTitle>
-                                <TextBoxArea >
-                                    <TextBoxText>Moema-SP</TextBoxText>
-                                </TextBoxArea>
-                            </TextBoxContainer>
-                        )}
-                    </TextBoxContainerRow>
+                    {editProfile ? (
+                        <>
+                            <Input value={city}
+                                onChangeText={(txt) => setCity(txt)} size="100%" placeholder="Cidade" />
+                            <Input value={state}
+                                onChangeText={(txt) => setState(txt)} size="100%" placeholder="Estado" />
+                        </>
+
+                    ) : (
+                        <TextBoxContainer >
+                            <TextBoxTitle>Cep:</TextBoxTitle>
+                            <TextBoxArea >
+                                <TextBoxText>{profile.endereco ? profile.endereco.cep : ""}</TextBoxText>
+                            </TextBoxArea>
+                        </TextBoxContainer>
+                    )}
+
+                    {editProfile ? (
+                        <Input value={number}
+                            onChangeText={(txt) => setNumeber(txt)} keyboardType="numeric" size="100%" placeholder="Número" />
+                    ) : (
+                        <TextBoxContainer >
+                            <TextBoxTitle>Cidade:</TextBoxTitle>
+                            <TextBoxArea >
+                                <TextBoxText>{profile.endereco ? `${profile.endereco.cidade} - ${profile.endereco.estado}` : ""}</TextBoxText>
+                            </TextBoxArea>
+                        </TextBoxContainer>
+                    )}
+
                     {editProfile ? (
                         <Button onPress={UpdateProfile}>
                             <ButtonTitle >Salvar</ButtonTitle>
@@ -234,7 +258,7 @@ export const UserProfile = ({ navigation }) => {
                         <></>
                     )}
                     {editProfile ? (
-                        <Button onPress={handleCloseEdit}>
+                        <Button onPress={handleCloseEdit} style={{ marginBottom: 30 }}>
                             <ButtonTitle >Cancelar</ButtonTitle>
                         </Button>
                     ) : (
