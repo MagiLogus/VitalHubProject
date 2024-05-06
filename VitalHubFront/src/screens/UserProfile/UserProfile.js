@@ -47,7 +47,7 @@ export const UserProfile = ({ navigation }) => {
                 setProfile(data);
                 setName(data.idNavigation.nome)
                 setEmail(data.idNavigation.email)
-                setBirth(new Date(data.dataNascimento).toLocaleDateString())
+                setBirth(moment(data.dataNascimento).format('YYYY-MM-DD'))
                 setCep(data.endereco.cep)
                 setCpf(data.cpf)
                 setStreet(data.endereco.logradouro)
@@ -96,6 +96,49 @@ export const UserProfile = ({ navigation }) => {
         setEditProfile(false);
     };
 
+    const formatBirth = (text) => {
+        const cleanedText = text.replace(/\D/g, '');
+
+        let formattedText = '';
+        if (cleanedText.length > 4) {
+            formattedText += cleanedText.substring(0, 4) + '-';
+            if (cleanedText.length > 6) {
+                formattedText += cleanedText.substring(4, 6) + '-';
+                formattedText += cleanedText.substring(6, 8);
+            } else {
+                formattedText += cleanedText.substring(4);
+            }
+        } else {
+            formattedText = cleanedText;
+        }
+
+        return formattedText;
+    };
+
+    const formatCPF = (text) => {
+        const cleanedText = text.replace(/\D/g, '');
+
+        let formattedText = '';
+        if (cleanedText.length > 3) {
+            formattedText += cleanedText.substring(0, 3) + '.';
+            if (cleanedText.length > 6) {
+                formattedText += cleanedText.substring(3, 6) + '.';
+                if (cleanedText.length > 9) {
+                    formattedText += cleanedText.substring(6, 9) + '-';
+                    formattedText += cleanedText.substring(9, 11);
+                } else {
+                    formattedText += cleanedText.substring(6);
+                }
+            } else {
+                formattedText += cleanedText.substring(3);
+            }
+        } else {
+            formattedText = cleanedText;
+        }
+
+        return formattedText;
+    };
+
     async function UpdateProfile() {
         const formData = new FormData();
         formData.append("Arquivo", {
@@ -108,7 +151,7 @@ export const UserProfile = ({ navigation }) => {
         formData.append("Estado", state);
         formData.append("Cep", cep);
         formData.append("Logradouro", street);
-        formData.append("DataNascimento", moment(birth).format('YYYY-MM-DD'));
+        formData.append("DataNascimento", birth);
         formData.append("Cpf", cpf);
         formData.append("Nome", name);
         formData.append("Numero", number);
@@ -190,14 +233,14 @@ export const UserProfile = ({ navigation }) => {
 
                     {editProfile ? (
                         <Input value={birth}
-                            onChangeText={(txt) => setBirth(txt)} keyboardType="numeric" size="100%" placeholder="Data de Nascimento" />
+                            onChangeText={(txt) => setBirth(formatBirth(txt))} keyboardType="numeric" size="100%" placeholder="Data de Nascimento" />
                     ) : (
                         <></>
                     )}
 
                     {editProfile ? (
                         <Input value={cpf}
-                            onChangeText={(txt) => setCpf(txt)} keyboardType="numeric" size="100%" placeholder="Cpf" />
+                            onChangeText={(txt) => setCpf(formatCPF(txt))} keyboardType="numeric" size="100%" placeholder="Cpf" />
                     ) : (
                         <TextBoxContainer>
                             <TextBoxTitle>Endereço:</TextBoxTitle>

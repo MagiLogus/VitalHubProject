@@ -55,8 +55,7 @@
               "RelativeToolTip": "WebAPI\\Controllers\\PacientesController.cs",
               "ViewState": "AQIAADsAAAAAAAAAAAAswE4AAABGAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-03T12:55:17.54Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-03T12:55:17.54Z"
             },
             {
               "$type": "Document",
@@ -68,8 +67,7 @@
               "RelativeToolTip": "WebAPI\\Domains\\Paciente.cs",
               "ViewState": "AQIAAAUAAAAAAAAAAAAxwBMAAAACAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-03T12:50:10.799Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-03T12:50:10.799Z"
             },
             {
               "$type": "Document",
@@ -81,8 +79,7 @@
               "RelativeToolTip": "WebAPI\\Domains\\Endereco.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-03T12:49:49.732Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-03T12:49:49.732Z"
             },
             {
               "$type": "Document",
@@ -94,8 +91,7 @@
               "RelativeToolTip": "WebAPI\\Domains\\TiposUsuario.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-03T12:49:15.576Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-03T12:49:15.576Z"
             }
           ]
         }
