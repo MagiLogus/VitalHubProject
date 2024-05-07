@@ -104,11 +104,34 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut]
-        public IActionResult UpdateProfile(Guid idUsuario, [FromForm] PacienteViewModel paciente)
+        public async Task<IActionResult> UpdateProfile(Guid idUsuario, [FromForm] PacienteViewModel paciente)
         {
             try
             {
-                return Ok(pacienteRepository.AtualizarPerfil(idUsuario, paciente));
+                Usuario usuarioBuscado = usuarioRepository.BuscarPorId(idUsuario);
+
+
+                if (usuarioBuscado == null)
+                {
+                    return NotFound();
+                }
+
+
+               // var containerName = "blobvitalhubcontainer";
+               // var connectionString = "DefaultEndpointsProtocol=https;AccountName=blobstoragevitalhub;AccountKey=i1aljpnlfG+pyTua8D5XgCbTxKeOAQFqitwhl+0CgpLmT6jBDPso9ACtbfH8f/NifEkt/0bnlLpn+ASt6s4jUw==;EndpointSuffix=core.windows.net";
+
+               // string fotoUrl = await AzureBlobStorageHelper.UploadImageBlobAsync(paciente.Arquivo!, connectionString!, containerName!);
+
+              //  usuarioBuscado.Foto = fotoUrl;
+
+
+                pacienteRepository.AtualizarPerfil(idUsuario,paciente);
+
+                //usuarioRepository.AtualizarFoto(idUsuario, fotoUrl);
+
+
+                return Ok();
+
             }
             catch (Exception ex)
             {

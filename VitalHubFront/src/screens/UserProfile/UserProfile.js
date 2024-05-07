@@ -18,8 +18,10 @@ export const UserProfile = ({ navigation }) => {
     const [tokenLoad, setTokenLoad] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [capturedImageUri, setCapturedImageUri] = useState(null);
+    const [photo, setPhoto] = useState(null);
     const [editProfile, setEditProfile] = useState(false);
     const [name, setName] = useState("");
+    const [photoFile, setPhotoFile] = useState(null);
     const [email, setEmail] = useState("");
     const [birth, setBirth] = useState("");
     const [cpf, setCpf] = useState("");
@@ -39,15 +41,19 @@ export const UserProfile = ({ navigation }) => {
         setTokenLoad(true);
     }
 
+
+
     useEffect(() => {
         async function ListUserProfile() {
             try {
                 const response = await api.get(`${profileResource}?id=${id}`);
                 const data = response.data;
+                console.log(response.data);
                 setProfile(data);
+                setPhoto(data.idNavigation.foto);
                 setName(data.idNavigation.nome)
                 setEmail(data.idNavigation.email)
-                setBirth(moment(data.dataNascimento).format('YYYY-MM-DD'))
+                setBirth(moment(data.dataNascimento).format('YYYY/MM/DD'))
                 setCep(data.endereco.cep)
                 setCpf(data.cpf)
                 setStreet(data.endereco.logradouro)
@@ -59,7 +65,7 @@ export const UserProfile = ({ navigation }) => {
             }
         }
         ListUserProfile();
-    }, [tokenLoad]);
+    }, [tokenLoad, capturedImageUri]);
 
     async function Logoff() {
         await AsyncStorage.removeItem('token');
@@ -84,8 +90,30 @@ export const UserProfile = ({ navigation }) => {
     };
 
     const handleConfirm = (photo) => {
-        setCapturedImageUri(photo);
-        handleCloseModal();
+
+        async function UpdatePicture() {
+            const formData = new FormData();
+
+            formData.append("Arquivo", {
+                uri: photo,
+                name: `image.${photo.split(".").pop()}`,
+                type: `image/${photo.split(".").pop()}`
+            });
+
+
+            await api.put(`/Usuario/AlterarFotoPerfil?id=${id}`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            }).then(response => {
+                console.log(response);
+                setCapturedImageUri(photo);
+                handleCloseModal();
+            }).catch(error => {
+                console.log(error);
+            })
+        }
+        UpdatePicture();
     };
 
     const handleOpenEdit = () => {
@@ -101,15 +129,30 @@ export const UserProfile = ({ navigation }) => {
 
         let formattedText = '';
         if (cleanedText.length > 4) {
-            formattedText += cleanedText.substring(0, 4) + '-';
+            formattedText += cleanedText.substring(0, 4) + '/';
             if (cleanedText.length > 6) {
-                formattedText += cleanedText.substring(4, 6) + '-';
+                formattedText += cleanedText.substring(4, 6) + '/';
                 formattedText += cleanedText.substring(6, 8);
             } else {
                 formattedText += cleanedText.substring(4);
             }
         } else {
             formattedText = cleanedText;
+        }
+
+        return formattedText;
+    };
+
+    const formatCEP = (text) => {
+        const cleanedText = text.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+
+        let formattedText = '';
+
+        if (cleanedText.length > 5) {
+            formattedText += cleanedText.substring(0, 5) + '-'; // Adiciona os primeiros 5 dígitos seguidos de um hífen
+            formattedText += cleanedText.substring(5); // Adiciona os dígitos restantes
+        } else {
+            formattedText = cleanedText; // Se não houver mais que 5 dígitos, retorna o texto sem formatação
         }
 
         return formattedText;
@@ -141,13 +184,9 @@ export const UserProfile = ({ navigation }) => {
 
     async function UpdateProfile() {
         const formData = new FormData();
-        formData.append("Arquivo", {
-            uri: capturedImageUri,
-            name: `image.${capturedImageUri.split(".").pop()}`,
-            type: `image/${capturedImageUri.split(".").pop()}`
-        });
 
         formData.append("Cidade", city);
+        formData.append("IdTipoUsuario", "41BA08AE-915B-4913-B3EB-45A19E8172E0");
         formData.append("Estado", state);
         formData.append("Cep", cep);
         formData.append("Logradouro", street);
@@ -157,12 +196,13 @@ export const UserProfile = ({ navigation }) => {
         formData.append("Numero", number);
         formData.append("Email", email);
 
-        await api.put(`/Pacientes`, formData, {
+        await api.put(`Pacientes?idUsuario=${id}`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
         }).then(response => {
             console.log(response);
+            navigation.replace("UserProfile");
         }).catch(error => {
             console.log(error);
         })
@@ -172,21 +212,14 @@ export const UserProfile = ({ navigation }) => {
         <Container>
             <StatusBar translucent backgroundColor="transparent" />
             <ContainerImage>
+                <ImageContainer source={{ uri: photo }} />
+
                 {editProfile ? (
-                    capturedImageUri ? (
-                        <ImageContainer source={{ uri: capturedImageUri }} />
-                    ) : (
-                        <ImageContainer source={require("../../assets/images/user_profile.png")} />
-                    )
+                    <></>
                 ) : (
-                    <ImageContainer source={require("../../assets/images/user_profile.png")} />
-                )}
-                {editProfile ? (
                     <ButtonCamera onPress={handleOpenModal}>
                         <MaterialCommunityIcons name="camera-plus" size={20} color="#fbfbfb" />
                     </ButtonCamera>
-                ) : (
-                    <></>
                 )}
                 <ModalCamera
                     visible={modalVisible}
@@ -252,7 +285,7 @@ export const UserProfile = ({ navigation }) => {
 
                     {editProfile ? (
                         <Input value={cep}
-                            onChangeText={(txt) => setCep(txt)} keyboardType="numeric" size="100%" placeholder="Cep" />
+                            onChangeText={(txt) => setCep(formatCEP(txt))} keyboardType="numeric" size="100%" placeholder="Cep" />
                     ) : (
                         <></>
                     )}

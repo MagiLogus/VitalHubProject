@@ -32,7 +32,7 @@ namespace WebAPI.Utils.BlobStorage
                 else
                 {
                     //retorna a uri e uma imagem padrao caso nenhuma imagem seja enviada na requisicao
-                    return "https://blobstoragevitalhub.blob.core.windows.net/blobvitalhubcontainer/125275514.png";
+                    return "https://blobstoragevitalhub.blob.core.windows.net/blobvitalhubcontainer/pngwing.com.png";
                 }
 
             }
