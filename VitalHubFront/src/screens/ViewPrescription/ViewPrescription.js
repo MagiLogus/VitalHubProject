@@ -5,6 +5,8 @@ import { AgeTitle, ButtonTitle, EmailTitle, TextBoxText, TextBoxTitle, Title } f
 import { AttentionIcon, CameraIcon } from "../../components/Icons/Style";
 import { LinkAction, LinkActionRed } from "../../components/Links/Style";
 import { Line } from "../../components/Line/Style";
+import { useState } from "react";
+import ModalCamera from "../../components/CameraModal/CameraModal";
 
 export const ViewPrescription = ({ navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);

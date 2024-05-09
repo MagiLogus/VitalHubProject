@@ -27,12 +27,9 @@ export const BtnCapture = styled.TouchableOpacity`
     height: 60px;
     padding: 10px;
     border-radius: 50px;
-
     background-color: white;
     border: 5px solid white;
-
     margin-left: 35%;
-
     align-items: 'center';
     justify-content: 'center';
 `
@@ -40,7 +37,6 @@ export const BtnCapture = styled.TouchableOpacity`
 export const BtnFlip = styled.TouchableOpacity`
     width: 60px;
     height: 60px;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -55,9 +51,7 @@ export const ConatinerImage = styled.View`
 export const Photo = styled.Image`
     width: 90%;
     height: 80%;
-
     border-radius: 5px;
-
     margin-top: 5%;
 `
 export const CustomButton = styled.TouchableOpacity`

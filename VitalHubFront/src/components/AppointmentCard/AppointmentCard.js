@@ -30,7 +30,8 @@ export const AppointmentCard = ({
   speciality,
   crm,
   navigation,
-  clinicId
+  clinicId,
+  hour
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -45,7 +46,7 @@ export const AppointmentCard = ({
   return (
     <>
       <ContainerCardsList onPress={() => setModalVisible(true)}>
-        <ProfileImage src={imageSource} />
+        <ProfileImage source={{ uri: imageSource }} />
         <ContentCard>
           <ProfileName>{profile === "Medico" ? "Dr(a). " : ""}{name}</ProfileName>
           <ProfileData>
@@ -62,17 +63,17 @@ export const AppointmentCard = ({
               <AntDesign
                 name="clockcircle"
                 size={14}
-                color={situacao == "pendente" ? "#49B3BA" : "#4E4B59"}
+                color={situacao == "Pendentes" ? "#49B3BA" : "#4E4B59"}
               />
               <TextTime situacao={situacao} >
-                14:00
+                {hour}
               </TextTime>
             </ClockCard>
             {
               situacao == "cancelado" ? (
                 <>
                 </>
-              ) : situacao == "pendente" ? (
+              ) : situacao == "Pendentes" ? (
                 <ButtonCard onPress={onPressCancel}>
                   <ButtonText situacao={situacao}>Cancelar</ButtonText>
                 </ButtonCard>

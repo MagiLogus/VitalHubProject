@@ -3,7 +3,7 @@ import { Modal, StyleSheet, StatusBar, TouchableOpacity, Text } from 'react-nati
 
 import { BtnCapture, BtnFlip, ContainerButtonsCamera, ConatinerImage, Photo, ButtonDisable, CustomButton, TitleButton, Container } from './style';
 
-import { Camera, CameraType } from 'expo-camera';
+import { CameraView, CameraType, useCameraPermissions, Camera } from 'expo-camera';
 import * as MediaLibrary from "expo-media-library";
 
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
@@ -14,8 +14,8 @@ const ModalCamera = ({ visible, onClose, title, onConfirm }) => {
 
     const [photo, setPhoto] = useState(null);
     const [openModal, setOpenModal] = useState(false);
-    const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
-    const [flashMode, setFlashMode] = useState(Camera.Constants.FlashMode.off);
+    const [cameraType, setCameraType] = useState("back");
+    const [flashMode, setFlashMode] = useState('off');
 
     async function CapturePhoto() {
         if (cameraRef.current) {
@@ -45,20 +45,20 @@ const ModalCamera = ({ visible, onClose, title, onConfirm }) => {
                 visible={visible}
                 onRequestClose={onClose}
             >
-                <Camera
+                <CameraView
                     ref={cameraRef}
-                    type={cameraType}
+                    facing={cameraType}
                     flashMode={flashMode}
                     style={styles.camera}
                     ratio={'16:9'}
                 >
                     <ContainerButtonsCamera>
                         <BtnCapture onPress={CapturePhoto} />
-                        <BtnFlip onPress={() => setCameraType(cameraType === CameraType.front ? CameraType.back : CameraType.front)}>
+                        <BtnFlip onPress={() => setCameraType(cameraType === 'back' ? 'front' : 'back')}>
                             <MaterialCommunityIcons name="camera-flip" size={35} color="white" />
                         </BtnFlip>
                     </ContainerButtonsCamera>
-                </Camera>
+                </CameraView>
                 <StatusBar hidden={true} />
             </Modal>
 

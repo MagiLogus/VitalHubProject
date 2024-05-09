@@ -1,12 +1,11 @@
 import { Modal } from 'react-native'
 import RNPickerSelect from 'react-native-picker-select';
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ModalContent, ViewContainer, Title, Label, Input, ViewOption, InputCheckbox, TextInputCheckbox } from '../../screens/ScheduleAppointment/Style'
 import { Button } from '../../components/Button/Style'
 import { ButtonTitle } from '../../components/Title/Style'
 import { LinkAction } from '../../components/Links/Style'
 import { IconSelect, SelectPicker } from '../SelectDate/Style'
-
 
 const types = [
   { id: 'C5A9FDAD-4191-4BDD-A9B0-18D2D0FEAB55', tipo: 'Rotina' },

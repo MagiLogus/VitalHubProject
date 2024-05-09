@@ -49,14 +49,14 @@ export const InputWithTitleContent = styled.View`
 `
 export const Button = styled.TouchableOpacity`
     width: 90%;
-    height: 44;
+    height: 44px;
     
     background-color: #496BBA;
     border-radius: 5px;
     
     justify-content: center;
     align-items: center;
-    margin-top: 15;
+    margin-top: 15px;
 `
 export const ButtonMedicalRecord = styled(Button)`
     width: 100%;
@@ -65,14 +65,14 @@ export const ButtonMedicalRecord = styled(Button)`
 export const ButtonTitle = styled.Text`
     color: #FFFFFF;
     font-family: 'MontserratAlternates_700Bold';
-    font-size: 16;
+    font-size: 16px;
     text-align: center;
     text-transform: uppercase;
 `
 export const TextAccount = styled.Text`
     font-family: 'MontserratAlternates_600SemiBold';
-    font-size: 14;
-    margin-left: 5;
+    font-size: 14px;
+    margin-left: 5px;
 `
 export const LinkBlueMontserrat = styled(TextAccount)`
     color: #4D659D;

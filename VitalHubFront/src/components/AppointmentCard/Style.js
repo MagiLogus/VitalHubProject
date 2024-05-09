@@ -47,7 +47,7 @@ export const TextBold = styled(TextAge)`
 
 export const TextTime = styled(TextAge)`
     font-family: "Quicksand_500Medium";
-    color: ${(props) => props.situacao == "pendente" ? "#49B3BA" : "#4E4B59"} ;
+    color: ${(props) => props.situacao == "Pendentes" ? "#49B3BA" : "#4E4B59"} ;
 `
 export const ViewRow = styled.View`
     width: 100%;
@@ -65,14 +65,14 @@ export const ClockCard = styled.View`
   justify-content: center;
     border-radius: 5px ;
     gap: 6px;
-    background-color: ${(props) => props.situacao == "pendente" ? "#E8FCFD" : "#F1F0F5"} ;
+    background-color: ${(props) => props.situacao == "Pendentes" ? "#E8FCFD" : "#F1F0F5"} ;
 `
 export const ButtonCard = styled.TouchableOpacity`
 `
 export const ButtonText = styled.Text`
 font-size: 14px;
 font-family: "MontserratAlternates_500Medium";
-    color: ${(props) => props.situacao == "pendente" ? "#C81D25" : "#344F8F"} ;
+    color: ${(props) => props.situacao == "Pendentes" ? "#C81D25" : "#344F8F"} ;
 `
 
 
