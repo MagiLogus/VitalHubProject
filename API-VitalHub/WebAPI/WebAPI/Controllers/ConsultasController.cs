@@ -101,7 +101,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("Prontuario")]
-        public IActionResult UpdateMedicalRecord(ProntuarioViewModel prontuarioviewModel)
+        public IActionResult UpdateMedicalRecord([FromForm] ProntuarioViewModel prontuarioviewModel)
         {
             try
             {

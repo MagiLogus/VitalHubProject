@@ -18,10 +18,12 @@ export const Appointments = ({ navigation }) => {
     const [statusList, setStatusList] = useState("Pendentes")
     const [showModalCancel, setShowModalCancel] = useState(false);
     const [showModalAgendamento, setShowModalAgendamento] = useState(false);
+    const [reload, setReload] = useState(false);
     const [profile, setProfile] = useState([]);
     const [dateAppointment, setDateAppointment] = useState("");
     const [appointment, setAppointment] = useState([]);
-    const [user, setUser] = useState([])
+    const [user, setUser] = useState([]);
+    const [appointmentId, setAppointmentId] = useState('');
 
     async function profileLoad() {
         const token = await userDecodeToken();
@@ -55,9 +57,21 @@ export const Appointments = ({ navigation }) => {
             })
     }
 
+    async function onPressHandleCancel() {
+        console.log(appointmentId);
+        await api.put(`/Consultas/Status?idConsulta=${appointmentId}&status=Cancelados`)
+            .then(response => {
+                console.log(response.data);
+                setShowModalCancel(false)
+                setReload(prevState => !prevState);
+            }).catch(error => {
+                console.log(error);
+            })
+    }
+
     useEffect(() => {
         ListarConsultas();
-    }, [dateAppointment])
+    }, [dateAppointment, reload])
 
 
 
@@ -69,11 +83,12 @@ export const Appointments = ({ navigation }) => {
             <FilterAppointment>
                 <TabsListAppointment textButton={"Agendadas"} clickButton={statusList === "Pendentes"} onPress={() => setStatusList("Pendentes")} />
                 <TabsListAppointment textButton={"Realizados"} clickButton={statusList === "Realizados"} onPress={() => setStatusList("Realizados")} />
-                <TabsListAppointment textButton={"Canceladas"} clickButton={statusList === "cancelado"} onPress={() => setStatusList("cancelado")} />
+                <TabsListAppointment textButton={"Canceladas"} clickButton={statusList === "Cancelados"} onPress={() => setStatusList("Cancelados")} />
             </FilterAppointment>
             {user == 'Pacientes' ? (
                 <ListComponent
                     data={appointment}
+                    //ListEmptyComponent={em} adicionar um listemprty 
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) =>
                         statusList == item.situacao.situacao && (
@@ -91,7 +106,10 @@ export const Appointments = ({ navigation }) => {
                                     speciality={item.speciality}
                                     email={item.email}
                                     clinicId={item.medicoClinica.clinicaId}
-                                    onPressCancel={() => setShowModalCancel(true)}
+                                    onPressCancel={() => {
+                                        setShowModalCancel(true);
+                                        setAppointmentId(item.id);
+                                    }}
                                 />
                             </ListItemContainer>
                         )
@@ -105,6 +123,7 @@ export const Appointments = ({ navigation }) => {
                         statusList == item.situacao.situacao && (
                             <ListItemContainer>
                                 <AppointmentCard
+                                    appointmentId={item.id}
                                     navigation={navigation}
                                     hour={format(new Date(item.dataConsulta), 'HH:mm')}
                                     name={item.paciente.idNavigation.nome}
@@ -116,7 +135,10 @@ export const Appointments = ({ navigation }) => {
                                     speciality={item.speciality}
                                     email={item.email}
                                     clinicId={item.medicoClinica.clinicaId}
-                                    onPressCancel={() => setShowModalCancel(true)}
+                                    onPressCancel={() => {
+                                        setShowModalCancel(true);
+                                        setAppointmentId(item.id);
+                                    }}
                                 />
                             </ListItemContainer>
                         )
@@ -126,6 +148,7 @@ export const Appointments = ({ navigation }) => {
             <CancellationModal
                 visible={showModalCancel}
                 setShowModalCancel={setShowModalCancel}
+                onPressHandleCancel={onPressHandleCancel}
             />
 
             <ScheduleAppointment

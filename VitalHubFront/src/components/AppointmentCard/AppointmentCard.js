@@ -31,7 +31,8 @@ export const AppointmentCard = ({
   crm,
   navigation,
   clinicId,
-  hour
+  hour,
+  appointmentId
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -70,7 +71,7 @@ export const AppointmentCard = ({
               </TextTime>
             </ClockCard>
             {
-              situacao == "cancelado" ? (
+              situacao == "Cancelados" ? (
                 <>
                 </>
               ) : situacao == "Pendentes" ? (
@@ -87,6 +88,7 @@ export const AppointmentCard = ({
         </ContentCard>
       </ContainerCardsList>
       <AppointmentModal
+        appointmentId={appointmentId}
         visible={modalVisible}
         setShowModalAppointment={setModalVisible}
         imageSource={imageSource}
