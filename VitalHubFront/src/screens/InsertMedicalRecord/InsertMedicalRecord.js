@@ -8,6 +8,8 @@ import { AgeTitle, EmailTitle, Title } from "../../components/Title/Style";
 import { useEffect, useState } from "react";
 import { api } from "../../service/service";
 import { differenceInYears, format } from 'date-fns';
+import { Input } from "../ScheduleAppointment/Style";
+import { TitleWithInput } from "../SelectDate/Style";
 
 export function InsertMedicalRecord({ navigation, route }) {
 
@@ -16,6 +18,7 @@ export function InsertMedicalRecord({ navigation, route }) {
     const [medicamento, setMedicamento] = useState('');
     const [descricao, setDescricao] = useState('');
     const [diagnostico, setDiagnostico] = useState('');
+    const [reload, setReload] = useState(false);
 
     useEffect(() => {
 
@@ -27,7 +30,7 @@ export function InsertMedicalRecord({ navigation, route }) {
         if (appointmentId) {
             searchAppointment();
         }
-    }, [appointmentId]);
+    }, [appointmentId, reload]);
 
     async function searchAppointment() {
         try {
@@ -39,18 +42,38 @@ export function InsertMedicalRecord({ navigation, route }) {
     }
 
     async function handleRegister() {
-        await api.post('/Consultas/Prontuario', {
-            consultaId: appointmentId,
-            medicamento: medicamento,
-            descricao: descricao,
-            diagnostico: diagnostico,
-        }).then(async response => {
+        const formData = new FormData();
+        formData.append('ConsultaId', appointmentId);
+        formData.append('Medicamento', medicamento);
+        formData.append('Descricao', descricao);
+        formData.append('Diagnostico', diagnostico);
+
+        try {
+            const response = await api.put('/Consultas/Prontuario', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'accept': '*/*'
+                }
+            });
+            console.log(`${medicamento}, ${descricao}, ${diagnostico}`);
             console.log(response);
-            navigation.replace('Main');
-        }).catch(error => {
+            onPressHandleCancel();
+
+        } catch (error) {
             console.log(error);
-        })
+        }
     };
+
+    async function onPressHandleCancel() {
+        await api.put(`/Consultas/Status?idConsulta=${appointmentId}&status=Realizados`)
+            .then(response => {
+                console.log(response.data);
+                setReload(prevState => !prevState);
+                navigation.replace('Main');
+            }).catch(error => {
+                console.log(error);
+            })
+    }
 
     async function Main() {
         navigation.replace("Main");
@@ -71,10 +94,34 @@ export function InsertMedicalRecord({ navigation, route }) {
                         <AgeTitle>{differenceInYears(new Date(), new Date(appointment.paciente.dataNascimento))} ano(s)</AgeTitle>
                         <EmailTitle>{appointment.paciente.idNavigation.email}</EmailTitle>
                     </AgeContainer>
-                    <InputWithTitle title={"Descrição da consulta"} placeholder={"Descrição"} onChangeText={(txt) => setDescricao(txt)} />
-                    <InputWithTitleMedium title={"Diagnóstico do paciente"} placeholder={"Diagnóstico"} onChangeText={(txt) => setDiagnostico(txt)} />
-                    <InputWithTitle title={"Prescrição médica"} placeholder={"Prescrição"} onChangeText={(txt) => setMedicamento(txt)} />
-                    <Button onPress={handleRegister}>
+                    <TitleWithInput>Descrição da consulta</TitleWithInput>
+                    <Input
+                        placeholder={"Descrição"}
+                        onChangeText={(txt) => setDescricao(txt)}
+                        style={{ marginBottom: 10 }}
+                        value={descricao}
+                    />
+
+                    <TitleWithInput>Diagnóstico do paciente</TitleWithInput>
+                    <Input
+                        placeholder={"Diagnóstico"}
+                        onChangeText={(txt) => setDiagnostico(txt)}
+                        style={{ marginBottom: 10 }}
+                        value={diagnostico}
+                    />
+
+                    <TitleWithInput>Prescrição médica</TitleWithInput>
+                    <Input
+                        placeholder={"Prescrição"}
+                        onChangeText={(txt) => setMedicamento(txt)}
+                        style={{ marginBottom: 10 }}
+                        value={medicamento}
+                    />
+
+                    <Button onPress={() => {
+                        handleRegister();
+
+                    }}>
                         <ButtonTitle>Salvar</ButtonTitle>
                     </Button>
                     <LinkAction onPress={Main}>Voltar</LinkAction>

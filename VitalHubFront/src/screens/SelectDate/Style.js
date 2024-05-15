@@ -38,6 +38,7 @@ export const TitleWithInput = styled.Text`
     font-family: "Quicksand_600SemiBold";
     font-size: 16px;
     margin-bottom: 10px;
+    margin-top: 10px;
 `
 export const ContentLinkCenter = styled.TouchableOpacity`
     width: 100%;

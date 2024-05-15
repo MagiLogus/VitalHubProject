@@ -15,6 +15,7 @@ import moment from "moment/moment";
 export const UserProfile = ({ navigation }) => {
     const [profile, setProfile] = useState([]);
     const [id, setId] = useState("");
+    const [role, setRole] = useState("");
     const [tokenLoad, setTokenLoad] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [capturedImageUri, setCapturedImageUri] = useState(null);
@@ -38,15 +39,15 @@ export const UserProfile = ({ navigation }) => {
     async function profileLoad() {
         const token = await userDecodeToken();
         setId(token.id);
+        setRole(token.role);
         setTokenLoad(true);
     }
-
-
 
     useEffect(() => {
         async function ListUserProfile() {
             try {
-                const response = await api.get(`${profileResource}?id=${id}`);
+                const url = (role == 'Medico' ? 'Medicos' : 'Pacientes')
+                const response = await api.get(`/${url}/BuscarPorId?id=${id}`);
                 const data = response.data;
                 console.log(response.data);
                 setProfile(data);
@@ -60,6 +61,8 @@ export const UserProfile = ({ navigation }) => {
                 setCity(data.endereco.cidade)
                 setState(data.endereco.estado)
                 setNumeber(data.endereco.numero.toString())
+                console.log(response.data);
+
             } catch (error) {
                 console.log(error);
             }
@@ -213,7 +216,6 @@ export const UserProfile = ({ navigation }) => {
             <StatusBar translucent backgroundColor="transparent" />
             <ContainerImage>
                 <ImageContainer source={{ uri: photo }} />
-
                 {editProfile ? (
                     <></>
                 ) : (
@@ -240,29 +242,43 @@ export const UserProfile = ({ navigation }) => {
                     )}
 
                     {editProfile ? (
-                        <Input value={name}
-                            onChangeText={(txt) => setName(txt)} size="100%" placeholder="Nome" />
+                        <Input
+                            value={name}
+                            onChangeText={(txt) => setName(txt)}
+                            size="100%"
+                            placeholder="Nome"
+                        />
                     ) : (
-                        <TextBoxContainer>
-                            <TextBoxTitle>Data de Nascimento:</TextBoxTitle>
-                            <TextBoxArea>
-                                <TextBoxText>{profile ? new Date(profile.dataNascimento).toLocaleDateString() : ""}</TextBoxText>
-                            </TextBoxArea>
-                        </TextBoxContainer>
-
+                        role !== "Medico" ? (
+                            <TextBoxContainer>
+                                <TextBoxTitle>Data de Nascimento:</TextBoxTitle>
+                                <TextBoxArea>
+                                    <TextBoxText>{profile ? new Date(profile.dataNascimento).toLocaleDateString() : ""}</TextBoxText>
+                                </TextBoxArea>
+                            </TextBoxContainer>
+                        ) : null
                     )}
 
                     {editProfile ? (
-                        <Input value={email}
-                            onChangeText={(txt) => setEmail(txt)} size="100%" placeholder="Email" />
+                        <Input
+                            value={email}
+                            onChangeText={(txt) => setEmail(txt)}
+                            size="100%"
+                            placeholder="Email"
+                        />
                     ) : (
-                        <TextBoxContainer>
-                            <TextBoxTitle>CPF:</TextBoxTitle>
-                            <TextBoxArea>
-                                <TextBoxText>{profile && profile.cpf ? profile.cpf.substring(0, 3) + '.***.***-**' : ""}</TextBoxText>
-                            </TextBoxArea>
-                        </TextBoxContainer>
+                        role !== "Medico" ? (
+                            <TextBoxContainer>
+                                <TextBoxTitle>CPF:</TextBoxTitle>
+                                <TextBoxArea>
+                                    <TextBoxText>{profile && profile.cpf ? profile.cpf.substring(0, 3) + '.***.***-**' : ""}</TextBoxText>
+                                </TextBoxArea>
+                            </TextBoxContainer>
+                        ) : (
+                            <></>
+                        )
                     )}
+
 
                     {editProfile ? (
                         <Input value={birth}

@@ -40,7 +40,7 @@ export const AppointmentCard = ({
     if (profile === 'Medico') {
       await navigation.replace("ViewPrescription");
     } else {
-      await navigation.replace("ConfirmMedicalRecord");
+      await navigation.replace("ConfirmMedicalRecord", { appointmentId: appointmentId });
     }
   }
 

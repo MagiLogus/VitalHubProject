@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const InputWithTitleContent = styled.View`
     align-items: flex-start;
 `
-export const TitleWithInput = styled.Text`
+export const TitleWithInput = styled.TextInput`
     font-family: "Quicksand_600SemiBold";
     font-size: 16px;
     margin-top: 10px;

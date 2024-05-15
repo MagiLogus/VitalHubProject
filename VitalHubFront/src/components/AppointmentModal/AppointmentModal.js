@@ -9,7 +9,7 @@ export const AppointmentModal = ({ navigation, appointmentId, clinicId, name, ag
     }
 
     async function InsertMedicalRecord() {
-        navigation.replace("InsertMedicalRecord", { appointmentId: appointmentId });
+        navigation.replace("ConfirmMedicalRecord", { appointmentId: appointmentId });
     }
 
     return (
@@ -35,7 +35,7 @@ export const AppointmentModal = ({ navigation, appointmentId, clinicId, name, ag
                             {profile === 'Medico' ? (
                                 <ButtonTitle onPress={ConsultationLocal}>Ver local da consulta</ButtonTitle>
                             ) : (
-                                <ButtonTitle onPress={InsertMedicalRecord}>Inserir Prontuário</ButtonTitle>
+                                <ButtonTitle onPress={InsertMedicalRecord}>Ver Prontuário</ButtonTitle>
                             )}
                         </ButtonModal>
                     )}

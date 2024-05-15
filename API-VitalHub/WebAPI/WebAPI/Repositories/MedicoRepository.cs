@@ -46,6 +46,9 @@ namespace WebAPI.Repositories
                 if (medico.Cidade != null)
                    medicoBuscado.Endereco!.Cidade = medico.Cidade;
 
+                if (medico.Estado != null)
+                    medicoBuscado.Endereco!.Estado = medico.Estado;
+
                 ctx.Medicos.Update(medicoBuscado);
                 ctx.SaveChanges();
 
